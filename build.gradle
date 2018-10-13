@@ -22,8 +22,8 @@ buildscript {
             'rxandroid'      : '2.0.2',
             'rxjava'         : '2.1.12',
             'urlConnection'  : '2.0.0',
-            'http'           : '2.5.0'
-
+            'http'           : '2.5.0',
+            'glide'          : '4.7.1'
     ]
 
     repositories {

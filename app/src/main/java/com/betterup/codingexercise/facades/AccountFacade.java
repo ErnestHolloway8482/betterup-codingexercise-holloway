@@ -1,9 +1,9 @@
-package com.betterup.codingexercise.models.facades;
+package com.betterup.codingexercise.facades;
 
+import com.betterup.codingexercise.daos.AccountInfoDAO;
+import com.betterup.codingexercise.managers.DatabaseManager;
 import com.betterup.codingexercise.mappers.AccountInfoDataMapper;
-import com.betterup.codingexercise.models.daos.AccountInfoDAO;
 import com.betterup.codingexercise.models.domainmodels.AccountInfoDOM;
-import com.betterup.codingexercise.models.managers.DatabaseManager;
 import com.betterup.codingexercise.restclients.AccountRestClient;
 
 import javax.inject.Singleton;
@@ -25,11 +25,11 @@ public class AccountFacade {
         this.accountInfoDAO = accountInfoDAO;
     }
 
-    public boolean login(final String userName, final String passWord){
+    public boolean login(final String userName, final String passWord) {
         return false;
     }
 
-    public AccountInfoDOM getAccountInfo(){
+    public AccountInfoDOM getAccountInfo() {
         return null;
     }
 }

@@ -93,6 +93,10 @@ dependencies {
     implementation "com.squareup.okhttp:okhttp-urlconnection:${versions.urlConnection}"
     implementation "com.squareup.okhttp:okhttp:${versions.http}"
 
+    //Glide
+    implementation "com.github.bumptech.glide:glide:${versions.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
+
     //Unit Testing Support Libraries
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito:mockito-core:${versions.mockito}"
