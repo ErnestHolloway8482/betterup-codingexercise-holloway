@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         cleanUp();
-
     }
 
     @Override

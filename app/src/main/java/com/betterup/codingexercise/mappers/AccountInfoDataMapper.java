@@ -1,8 +1,12 @@
 package com.betterup.codingexercise.mappers;
 
 import com.betterup.codingexercise.models.databasemodels.AccountInfoDBM;
+import com.betterup.codingexercise.models.databasemodels.OAuthTokenDBM;
 import com.betterup.codingexercise.models.domainmodels.AccountInfoDOM;
+import com.betterup.codingexercise.models.domainmodels.OAuthTokenDOM;
+import com.betterup.codingexercise.models.servermodels.OAuthResponseSM;
 import com.betterup.codingexercise.models.servermodels.UserResponseSM;
+import com.betterup.codingexercise.utilities.LoggerUtils;
 
 public class AccountInfoDataMapper {
 
@@ -10,7 +14,8 @@ public class AccountInfoDataMapper {
         try {
             return getAccountInfoDBM(serverModel);
         } catch (Exception e) {
-            //TODO add code to add a logging statment here.
+            LoggerUtils.logError(e.getMessage());
+
             return null;
         }
     }
@@ -19,7 +24,28 @@ public class AccountInfoDataMapper {
         try {
             return getAccountInfoDOM(databaseModel);
         } catch (Exception e) {
-            //TODO add code to add a logging statment here.
+            LoggerUtils.logError(e.getMessage());
+
+            return null;
+        }
+    }
+
+    public OAuthTokenDBM map(final OAuthResponseSM serverModel) {
+        try {
+            return getOAuthTokenDBM(serverModel);
+        } catch (Exception e) {
+            LoggerUtils.logError(e.getMessage());
+
+            return null;
+        }
+    }
+
+    public OAuthTokenDOM map(final OAuthTokenDBM databaseModel) {
+        try {
+            return getOAuthTokenDOM(databaseModel);
+        } catch (Exception e) {
+            LoggerUtils.logError(e.getMessage());
+
             return null;
         }
     }
@@ -53,6 +79,18 @@ public class AccountInfoDataMapper {
         domainModel.timeZonePreference = databaseModel.getTimeZonePreference();
         domainModel.smsNotificationEnabled = databaseModel.isSmsNotificationEnabled();
         domainModel.emailNotificationEnabled = databaseModel.isEmailNotificationEnabled();
+
+        return domainModel;
+    }
+
+    private OAuthTokenDBM getOAuthTokenDBM(final OAuthResponseSM serverModel) {
+        OAuthTokenDBM databaseModel = new OAuthTokenDBM();
+
+        return databaseModel;
+    }
+
+    private OAuthTokenDOM getOAuthTokenDOM(final OAuthTokenDBM databaseModel) {
+        OAuthTokenDOM domainModel = new OAuthTokenDOM();
 
         return domainModel;
     }
