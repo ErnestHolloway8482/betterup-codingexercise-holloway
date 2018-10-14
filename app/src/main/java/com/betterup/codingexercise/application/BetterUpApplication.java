@@ -18,10 +18,10 @@ public class BetterUpApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
 
-        instance = null;
+        cleanUp();
     }
 
-    public BetterUpApplication getInsance(){
+    public static BetterUpApplication getInsance(){
         return instance;
     }
 

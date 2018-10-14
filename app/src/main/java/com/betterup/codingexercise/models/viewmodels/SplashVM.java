@@ -1,86 +1,45 @@
 package com.betterup.codingexercise.models.viewmodels;
 
-import java.io.InputStream;
+import com.betterup.codingexercise.managers.NavigationManager;
+import com.betterup.codingexercise.utilities.LoggerUtils;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import qv21.codingexercise.R;
-import qv21.codingexercise.activities.MainActivity;
-import qv21.codingexercise.facades.WellDataFacade;
-import qv21.codingexercise.managers.NavigationManager;
-import qv21.codingexercise.utilities.LoggerUtils;
-import qv21.codingexercise.utilities.RawFileUtility;
-import qv21.codingexercise.views.WellDataListScreen;
 
 /**
- * {@link android.arch.lifecycle.ViewModel} that defines the controller logic for the {@link qv21.codingexercise.views.SplashScreen} that is presented anytime the user starts the app.
- * This class will navigate directly to the {@link WellDataListScreen} if the data has already been seeded from the file into the database, otherwise it will
- * seed the data first before allowing the user to view the {@linkl WellDataListScreen}.
+ * {@link android.arch.lifecycle.ViewModel} that defines the controller logic for the SCREEN that is presented anytime the user starts the app.
+ * This class will navigate directly to the SCREEN if the data has already been seeded from the file into the database, otherwise it will
+ * seed the data first before allowing the user to view the SCREEN.
  */
 public class SplashVM extends BaseVM {
-    private final WellDataFacade wellDataFacade;
     private final NavigationManager navigationManager;
-    private Disposable subscriber;
     private Disposable delaySubscriber;
 
-    public SplashVM(final WellDataFacade wellDataFacade, final NavigationManager navigationManager) {
-        this.wellDataFacade = wellDataFacade;
+    public SplashVM(final NavigationManager navigationManager) {
         this.navigationManager = navigationManager;
 
-        navigateToWellDataListScreen();
+        navigateToAccountInfoScreen();
     }
 
-    private void navigateToWellDataListScreen() {
-        if (wellDataFacade.doesWellDataExist()) {
-            MainActivity.getInstance().getViewModel().displayProgressDialog();
-            setupWellDataListScreen();
-        } else {
-            MainActivity.getInstance().getViewModel().displayProgressDialog(R.string.reading_well_data_file);
-            seedWellDataBeforeSettingUpTheWellDataListScreen();
-        }
+    private void navigateToAccountInfoScreen() {
+
     }
 
-    private void setupWellDataListScreen() {
+    private void setupAccountInfoScreen() {
         int navigationDelay = 2;
 
         cleanupSubscribers();
 
         delaySubscriber = Observable.timer(navigationDelay, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(__ -> setupNavigationStackForWellDataListScreen(), throwable -> LoggerUtils.log(throwable.getMessage()));
+                .subscribe(__ -> setupNavigationStackForAccountInfoScreen(), throwable -> LoggerUtils.log(throwable.getMessage()));
     }
 
-    private void setupNavigationStackForWellDataListScreen() {
-        MainActivity.getInstance().runOnUiThread(this::finalizeNavigationStackForWellDataListScreen);
-    }
+    private void setupNavigationStackForAccountInfoScreen(){
 
-    private void finalizeNavigationStackForWellDataListScreen() {
-        MainActivity.getInstance().getViewModel().dismissProgressDialog();
-
-        //Guarantees that after we leave the splash screen that the well data list screen is the only screen on the navigation stack.
-        WellDataListScreen wellDataListScreen = new WellDataListScreen(MainActivity.getInstance());
-        navigationManager.clearAllViewsFromStack();
-        navigationManager.push(wellDataListScreen);
-        navigationManager.showScreen();
-    }
-
-    private void seedWellDataBeforeSettingUpTheWellDataListScreen() {
-        cleanupSubscribers();
-
-        subscriber = Single.fromCallable(this::seedWellData)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(__ -> setupWellDataListScreen(), throwable -> LoggerUtils.log(throwable.getMessage()));
-    }
-
-    private boolean seedWellData() {
-        InputStream inputStream = RawFileUtility.getInputStreamFromResourceId(MainActivity.getInstance().getResources(), R.raw.well_data);
-
-        return wellDataFacade.seedWellDataIntoDatabase(inputStream);
     }
 
     private void cleanupSubscribers() {
@@ -88,13 +47,6 @@ public class SplashVM extends BaseVM {
             if (!delaySubscriber.isDisposed()) {
                 delaySubscriber.dispose();
                 delaySubscriber = null;
-            }
-        }
-
-        if (subscriber != null) {
-            if (!subscriber.isDisposed()) {
-                subscriber.dispose();
-                subscriber = null;
             }
         }
     }

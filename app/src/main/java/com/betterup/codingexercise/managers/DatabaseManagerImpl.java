@@ -16,8 +16,8 @@ import io.realm.RealmConfiguration;
  * setup location for allowing the app to utilize Realm for storing it's objects.
  */
 @Singleton
-public class RealmDBManager implements DatabaseManager {
-    private static final String TAG = "RealmDBManager";
+public class DatabaseManagerImpl implements DatabaseManager {
+    private static final String TAG = "DatabaseManagerImpl";
     private static final String DB_FILE_NAME = "betterup.realm";
     private static final String DB_FILE_NAME_TEST = "betterup_test.realm";
     private static final int SCHEMA_VERSION = 1;
@@ -25,7 +25,7 @@ public class RealmDBManager implements DatabaseManager {
 
     private Realm realm;
 
-    public RealmDBManager(final Context context) {
+    public DatabaseManagerImpl(final Context context) {
         this.context = context;
     }
 
@@ -57,13 +57,8 @@ public class RealmDBManager implements DatabaseManager {
     }
 
     private void closeRealm() {
-        Runnable runnable = () -> {
-            Realm realm = Realm.getDefaultInstance();
-            realm.close();
-        };
-
-        Thread thread = new Thread(runnable);
-        thread.run();
+        Realm realm = Realm.getDefaultInstance();
+        realm.close();
     }
 
     private void setupDefaultConfiguration(final Context context, final String fileName) {

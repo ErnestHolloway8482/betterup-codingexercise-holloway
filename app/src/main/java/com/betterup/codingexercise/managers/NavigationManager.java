@@ -5,9 +5,6 @@ import android.support.annotation.NonNull;
 import com.betterup.codingexercise.views.Screen;
 import com.betterup.codingexercise.views.ViewContainer;
 
-import javax.inject.Singleton;
-
-@Singleton
 public interface NavigationManager {
     /**
      * Sets the main view container that all other views will be swapped into as navigation requests are made.
