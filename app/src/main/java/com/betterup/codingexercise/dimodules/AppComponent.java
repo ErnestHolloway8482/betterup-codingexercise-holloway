@@ -13,10 +13,10 @@ import dagger.Component;
         ManagerModule.class,
         Context.class,
         ViewModelModule.class,
-        ContextModule.class,
         DAOModule.class,
         FacadeModule.class,
-        RestClientModule.class})
+        RestClientModule.class,
+        RealmModule.class})
 public interface AppComponent {
     void inject(final CommonViewBindings commonViewBindings);
 }

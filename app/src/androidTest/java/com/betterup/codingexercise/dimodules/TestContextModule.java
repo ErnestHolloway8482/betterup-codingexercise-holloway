@@ -17,10 +17,6 @@ public class TestContextModule extends ContextModule {
 
     @Override
     public Activity provideActivity() {
-        try {
-            return MainActivity.class.newInstance();
-        } catch (Exception e) {
-            return null;
-        }
+        return MainActivity.getInstance();
     }
 }
