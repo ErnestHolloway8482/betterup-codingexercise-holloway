@@ -62,13 +62,13 @@ public class AndroidTestManagerModule {
 
     @Singleton
     @Provides
-    public static ResourceManager provideResourceManager(){
+    public static ResourceManager provideResourceManager() {
         return Mockito.mock(ResourceManagerImpl.class);
     }
 
     @Singleton
     @Provides
-    public static ScreenManager provideScreenManager(){
+    public static ScreenManager provideScreenManager() {
         ScreenManagerImpl screenManager = Mockito.mock(ScreenManagerImpl.class);
 
         SplashScreen splashScreen = Mockito.mock(SplashScreen.class);

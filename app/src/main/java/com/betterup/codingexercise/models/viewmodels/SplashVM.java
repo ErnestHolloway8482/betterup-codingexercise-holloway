@@ -1,7 +1,12 @@
 package com.betterup.codingexercise.models.viewmodels;
 
+import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.NavigationManager;
+import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.utilities.LoggerUtils;
+import com.betterup.codingexercise.views.AccountInfoScreen;
+import com.betterup.codingexercise.views.LoginScreen;
+import com.betterup.codingexercise.views.Screen;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,31 +20,52 @@ import io.reactivex.disposables.Disposable;
  * seed the data first before allowing the user to view the SCREEN.
  */
 public class SplashVM extends BaseVM {
+    private final AccountFacade accountFacade;
     private final NavigationManager navigationManager;
+    private final ScreenManager screenManager;
+
     private Disposable delaySubscriber;
 
-    public SplashVM(final NavigationManager navigationManager) {
+    public SplashVM(final AccountFacade accountFacade, final NavigationManager navigationManager, final ScreenManager screenManager) {
+        this.accountFacade = accountFacade;
         this.navigationManager = navigationManager;
+        this.screenManager = screenManager;
 
-        navigateToAccountInfoScreen();
+        delayNavigationTimeToCorrectScreen();
     }
 
-    private void navigateToAccountInfoScreen() {
-
-    }
-
-    private void setupAccountInfoScreen() {
+    private void delayNavigationTimeToCorrectScreen() {
         int navigationDelay = 2;
 
         cleanupSubscribers();
 
         delaySubscriber = Observable.timer(navigationDelay, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(__ -> setupNavigationStackForAccountInfoScreen(), throwable -> LoggerUtils.log(throwable.getMessage()));
+                .subscribe(__ -> navigateToCorrectScreen(), throwable -> LoggerUtils.log(throwable.getMessage()));
     }
 
-    private void setupNavigationStackForAccountInfoScreen(){
+    private void navigateToCorrectScreen() {
+        if (accountFacade.getAccountInfoFromCache() != null) {
+            navigateToAccountInfoScreen();
+        } else {
+            navigateToLoginScreen();
+        }
 
+        cleanupSubscribers();
+    }
+
+    private void navigateToLoginScreen() {
+        Screen loginScreen = screenManager.getScreenFromClass(LoginScreen.class);
+
+        navigationManager.clearAllViewsFromStack();
+        navigationManager.push(loginScreen);
+    }
+
+    private void navigateToAccountInfoScreen() {
+        Screen accountInfoScreen = screenManager.getScreenFromClass(AccountInfoScreen.class);
+
+        navigationManager.clearAllViewsFromStack();
+        navigationManager.push(accountInfoScreen);
     }
 
     private void cleanupSubscribers() {

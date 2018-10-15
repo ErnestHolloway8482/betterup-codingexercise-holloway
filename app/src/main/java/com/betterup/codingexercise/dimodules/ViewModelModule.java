@@ -40,7 +40,7 @@ public class ViewModelModule {
     }
 
     @Provides
-    public static SplashVM provideSplashVM(final NavigationManager navigationManager) {
-        return new SplashVM(navigationManager);
+    public static SplashVM provideSplashVM(final AccountFacade accountFacade, final NavigationManager navigationManager, final ScreenManager screenManager) {
+        return new SplashVM(accountFacade, navigationManager, screenManager);
     }
 }

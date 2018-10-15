@@ -3,6 +3,7 @@ package com.betterup.codingexercise.dimodules;
 
 import com.betterup.codingexercise.BaseAndroidUnitTest;
 import com.betterup.codingexercise.viewmodeltests.LoginVMTest;
+import com.betterup.codingexercise.viewmodeltests.SplashVMTest;
 
 import javax.inject.Singleton;
 
@@ -22,5 +23,7 @@ public interface AndroidTestAppComponent extends AppComponent {
     void inject(final BaseAndroidUnitTest baseAndroidUnitTest);
 
     void inject(final LoginVMTest loginVMTest);
+
+    void inject(final SplashVMTest splashVMTest);
 
 }

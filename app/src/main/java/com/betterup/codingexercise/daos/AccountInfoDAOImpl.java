@@ -29,7 +29,7 @@ public class AccountInfoDAOImpl extends RealmAbstractDAO implements AccountInfoD
     @Override
     public AccountInfoDBM getAccountInfo() {
         try {
-            return super.read(AccountInfoDBM.class).get(0);
+            return super.readSingleObject(AccountInfoDBM.class);
         } catch (Exception e) {
             return null;
         }
