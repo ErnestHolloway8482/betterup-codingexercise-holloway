@@ -16,7 +16,7 @@ public class ContextModule {
     @Singleton
     @Provides
     public Context provideApplicationContext() {
-        return BetterUpApplication.getInsance();
+        return BetterUpApplication.getInstance();
     }
 
     @Singleton

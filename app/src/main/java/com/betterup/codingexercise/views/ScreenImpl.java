@@ -9,11 +9,10 @@ import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
 import com.android.databinding.library.baseAdapters.BR;
+import com.betterup.codingexercise.activities.MainActivity;
+import com.betterup.codingexercise.models.viewmodels.BaseVM;
 
 import javax.inject.Inject;
-
-import qv21.codingexercise.activities.MainActivity;
-import qv21.codingexercise.models.viewmodels.BaseVM;
 
 /**
  * This base class represents the content for any screen that the user is able to navigate to.
