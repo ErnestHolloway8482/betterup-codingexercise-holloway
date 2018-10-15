@@ -3,11 +3,9 @@ package com.betterup.codingexercise.daos;
 import com.betterup.codingexercise.models.databasemodels.AccountInfoDBM;
 import com.betterup.codingexercise.models.databasemodels.OAuthTokenDBM;
 
-import io.realm.Realm;
-
 public class AccountInfoDAOImpl extends RealmAbstractDAO implements AccountInfoDAO {
-    public AccountInfoDAOImpl(final Realm realm) {
-        super(realm);
+    public AccountInfoDAOImpl() {
+        super();
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.betterup.codingexercise.dimodules;
 
 import com.betterup.codingexercise.facades.AccountFacade;
+import com.betterup.codingexercise.managers.AlertDialogManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
+import com.betterup.codingexercise.managers.ResourceManager;
+import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.models.viewmodels.AccountInfoVM;
 import com.betterup.codingexercise.models.viewmodels.LoginVM;
 import com.betterup.codingexercise.models.viewmodels.MainActivityVM;
@@ -22,8 +25,13 @@ public class ViewModelModule {
     }
 
     @Provides
-    public static LoginVM provideLoginVM(final AccountFacade accountFacade, final NavigationManager navigationManager, final NetworkManager networkManager) {
-        return new LoginVM(accountFacade, navigationManager, networkManager);
+    public static LoginVM provideLoginVM(final AccountFacade accountFacade,
+                                         final NavigationManager navigationManager,
+                                         final NetworkManager networkManager,
+                                         final AlertDialogManager alertDialogManager,
+                                         final ScreenManager screenManager,
+                                         final ResourceManager resourceManager) {
+        return new LoginVM(accountFacade, navigationManager, networkManager, alertDialogManager, screenManager, resourceManager);
     }
 
     @Provides

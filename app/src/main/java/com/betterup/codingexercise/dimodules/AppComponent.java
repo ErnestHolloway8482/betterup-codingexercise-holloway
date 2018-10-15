@@ -11,6 +11,7 @@ import dagger.Component;
         ManagerModule.class,
         ContextModule.class,
         ViewModelModule.class,
+        MapperModule.class,
         DAOModule.class,
         FacadeModule.class,
         RestClientModule.class,

@@ -24,8 +24,8 @@ public abstract class RealmAbstractDAO {
     private Realm realm;
     private boolean success;
 
-    public RealmAbstractDAO(final Realm realm) {
-        this.realm = realm;
+    public RealmAbstractDAO() {
+        this.realm = Realm.getDefaultInstance();
     }
 
     public <T extends RealmObject> boolean create(final T domainModel) {

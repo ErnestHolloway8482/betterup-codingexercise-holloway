@@ -100,17 +100,23 @@ dependencies {
     //Unit Testing Support Libraries
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito:mockito-core:${versions.mockito}"
-    testImplementation "com.google.dagger:dagger:${versions.dagger}"
 
+    testImplementation "com.google.dagger:dagger:${versions.dagger}"
     testImplementation "com.google.dagger:dagger-android-support:${versions.dagger}"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
-    testAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
+
 
     //Android Based Unit Testing Support Libraries
     androidTestImplementation "com.android.support.test:runner:${versions.testSupport}"
     androidTestImplementation "com.android.support:support-annotations:${versions.support}"
     androidTestImplementation "com.android.support.test:rules:${versions.testSupport}"
     androidTestImplementation "org.hamcrest:hamcrest-library:${versions.hamcrest}"
+    androidTestImplementation "org.mockito:mockito-core:${versions.mockito}"
+    androidTestImplementation "org.mockito:mockito-android:${versions.mockito}"
+
+    androidTestImplementation "com.google.dagger:dagger:${versions.dagger}"
+    androidTestImplementation "com.google.dagger:dagger-android-support:${versions.dagger}"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     //Android Based UI Testing Support Libraries
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso}"
