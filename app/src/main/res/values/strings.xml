@@ -1,8 +1,17 @@
 <resources>
     <string name="app_name">codingexercise</string>
     <string name="network_error_title">Network Error</string>
-    <string name="network_error_message">There is a network connectivity issue. Please check your mobile data or Wi-Fi settings.</string>
+    <string name="network_error_message">There is a network connectivity issue. Please check your
+        mobile data or Wi-Fi settings.
+    </string>
 
     <string name="login_error_title">Login Error</string>
-    <string name="login_error_message">We are unable to sign you into the app. Please check that your username and password.</string>
+    <string name="login_error_message">We are unable to sign you into the app. Please check that
+        your username and password.
+    </string>
+
+    <string name="account_info_error_title">Account Info Error</string>
+    <string name="account_info_error_message">We are having trouble getting your account info at this time. Please try again later.</string>
+
+
 </resources>

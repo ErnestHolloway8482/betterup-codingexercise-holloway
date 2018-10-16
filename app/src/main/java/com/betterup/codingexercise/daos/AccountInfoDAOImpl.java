@@ -38,7 +38,7 @@ public class AccountInfoDAOImpl extends RealmAbstractDAO implements AccountInfoD
     @Override
     public OAuthTokenDBM getOauthToken() {
         try {
-            return super.read(OAuthTokenDBM.class).get(0);
+            return super.readSingleObject(OAuthTokenDBM.class);
         } catch (Exception e) {
             return null;
         }
