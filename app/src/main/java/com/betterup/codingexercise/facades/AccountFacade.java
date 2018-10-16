@@ -63,7 +63,7 @@ public class AccountFacade {
         }
     }
 
-    public AccountInfoDOM getAccountInfFromCache(){
+    public AccountInfoDOM getAccountInfoFromCache(){
         AccountInfoDBM accountInfoDBM = accountInfoDAO.getAccountInfo();
 
         return accountInfoDataMapper.map(accountInfoDBM);
@@ -76,5 +76,10 @@ public class AccountFacade {
     public void removeDatabase(){
         databaseManager.closeDatabase();
         databaseManager.deleteDatabase();
+    }
+
+    public void clearDataBaseItems(){
+        accountInfoDAO.deleteAccountInfo();
+        accountInfoDAO.deleteOAuthToken();
     }
 }

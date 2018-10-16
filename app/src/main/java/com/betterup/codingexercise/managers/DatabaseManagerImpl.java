@@ -31,10 +31,10 @@ public class DatabaseManagerImpl implements DatabaseManager {
 
     @Override
     public void openDatabase(final String fileName) {
-        if (BuildConfigUtility.isInTestMode()) {
-            setupDefaultConfiguration(context, generateFileName(fileName));
-        } else {
-            setupDefaultConfigurationForTest(context, generateFileName(fileName));
+        try {
+            openCorrectDatabaseBasedOnTestMode(fileName);
+        } catch (Exception e) {
+            LoggerUtils.logError(e.getMessage());
         }
     }
 
@@ -59,6 +59,14 @@ public class DatabaseManagerImpl implements DatabaseManager {
     private void closeRealm() {
         Realm realm = Realm.getDefaultInstance();
         realm.close();
+    }
+
+    private void openCorrectDatabaseBasedOnTestMode(final String fileName) {
+        if (BuildConfigUtility.isInTestMode()) {
+            setupDefaultConfigurationForTest(context, generateFileName(fileName));
+        } else {
+            setupDefaultConfiguration(context, generateFileName(fileName));
+        }
     }
 
     private void setupDefaultConfiguration(final Context context, final String fileName) {

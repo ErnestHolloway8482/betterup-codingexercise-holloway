@@ -17,6 +17,11 @@ import com.betterup.codingexercise.managers.ResourceManager;
 import com.betterup.codingexercise.managers.ResourceManagerImpl;
 import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.managers.ScreenManagerImpl;
+import com.betterup.codingexercise.views.AccountInfoScreen;
+import com.betterup.codingexercise.views.LoginScreen;
+import com.betterup.codingexercise.views.SplashScreen;
+
+import org.mockito.Mockito;
 
 import javax.inject.Singleton;
 
@@ -24,11 +29,11 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ManagerModule {
+public class AndroidTestManagerModule {
     @Singleton
     @Provides
     public static AlertDialogManager provideAlertDialogManager(final Activity activity) {
-        return new AlertDialogManagerImpl(activity);
+        return Mockito.mock(AlertDialogManagerImpl.class);
     }
 
     @Singleton
@@ -40,7 +45,7 @@ public class ManagerModule {
     @Singleton
     @Provides
     public static ImageCacheManager provideImageCacheManager(final Context context) {
-        return new ImageCacheManagerImpl(context);
+        return Mockito.mock(ImageCacheManagerImpl.class);
     }
 
     @Singleton
@@ -52,18 +57,28 @@ public class ManagerModule {
     @Singleton
     @Provides
     public static NetworkManager provideNetworkManager(final Context context) {
-        return new NetworkManagerImpl(context);
+        return Mockito.mock(NetworkManagerImpl.class);
     }
 
     @Singleton
     @Provides
-    public static ResourceManager provideResourceManager(){
-        return new ResourceManagerImpl();
+    public static ResourceManager provideResourceManager() {
+        return Mockito.mock(ResourceManagerImpl.class);
     }
 
     @Singleton
     @Provides
-    public static ScreenManager provideScreenManager(){
-        return new ScreenManagerImpl();
+    public static ScreenManager provideScreenManager() {
+        ScreenManagerImpl screenManager = Mockito.mock(ScreenManagerImpl.class);
+
+        SplashScreen splashScreen = Mockito.mock(SplashScreen.class);
+        LoginScreen loginScreen = Mockito.mock(LoginScreen.class);
+        AccountInfoScreen accountInfoScreen = Mockito.mock(AccountInfoScreen.class);
+
+        Mockito.when(screenManager.getScreenFromClass(SplashScreen.class)).thenReturn(splashScreen);
+        Mockito.when(screenManager.getScreenFromClass(LoginScreen.class)).thenReturn(loginScreen);
+        Mockito.when(screenManager.getScreenFromClass(AccountInfoScreen.class)).thenReturn(accountInfoScreen);
+
+        return screenManager;
     }
 }

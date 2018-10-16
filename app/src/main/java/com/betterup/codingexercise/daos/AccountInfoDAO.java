@@ -8,4 +8,6 @@ public interface AccountInfoDAO {
     boolean saveOAuthToken(final OAuthTokenDBM authTokenDBM);
     AccountInfoDBM getAccountInfo();
     OAuthTokenDBM getOauthToken();
+    boolean deleteAccountInfo();
+    boolean deleteOAuthToken();
 }

@@ -3,11 +3,16 @@ package com.betterup.codingexercise.models.viewmodels;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 
+import com.betterup.codingexercise.activities.MainActivity;
+import com.betterup.codingexercise.managers.ResourceManager;
+
 /**
  * {@link android.arch.lifecycle.ViewModel} for the control logic used to configure and display global screen elements such
  * as the {@link android.widget.Toolbar}, loading spinner, and {@link android.support.v7.app.AppCompatDialog}.
  */
 public class MainActivityVM extends BaseVM {
+    private final ResourceManager resourceManager;
+
     public final ObservableField<String> progressDialogMessage = new ObservableField<>();
     public final ObservableBoolean isProgressDialogVisible = new ObservableBoolean();
 
@@ -15,14 +20,16 @@ public class MainActivityVM extends BaseVM {
     public final ObservableField<String> toolBarTitle = new ObservableField<>();
     public final ObservableBoolean isToolBarBackButtonVisible = new ObservableBoolean();
 
-    public MainActivityVM() {
+    public MainActivityVM(final ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+
         isToolBarVisible.set(false);
         isToolBarBackButtonVisible.set(false);
         toolBarTitle.set(null);
     }
 
     public void onNavigationBackButtonPressed() {
-        //TODO add code for calling out the actvities onBack.
+        MainActivity.getInstance().onBackPressed();
     }
 
     public void displayProgressDialog(final String message) {
@@ -35,8 +42,7 @@ public class MainActivityVM extends BaseVM {
     }
 
     public void displayProgressDialog(final int resourceId) {
-        //TODO figure out how to convert resource id to string.
-        //displayProgressDialog(MainActivity.getInstance().getString(resourceId));
+        displayProgressDialog(resourceManager.getString(resourceId));
     }
 
     public void dismissProgressDialog() {
@@ -53,5 +59,6 @@ public class MainActivityVM extends BaseVM {
     public void dismissToolbar() {
         isToolBarVisible.set(false);
         isToolBarBackButtonVisible.set(false);
+        toolBarTitle.set(null);
     }
 }

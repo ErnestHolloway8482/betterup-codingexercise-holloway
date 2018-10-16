@@ -21,17 +21,14 @@ import io.realm.Sort;
  * -Since pagination needed to be supported, Realm can easily cache all of the objects, rely on Lazy loading to reduce the memory foot print, and then also allows the developer to attach a listener to the object for when new data is available.
  */
 public abstract class RealmAbstractDAO {
-    private Realm realm;
     private boolean success;
 
-    public RealmAbstractDAO(final Realm realm) {
-        this.realm = realm;
-    }
-
     public <T extends RealmObject> boolean create(final T domainModel) {
+        Realm _realm = Realm.getDefaultInstance();
+
         success = false;
 
-        realm.executeTransaction(realm -> {
+        _realm.executeTransaction(realm -> {
             realm.copyToRealm(domainModel);
             success = true;
         });
@@ -40,9 +37,10 @@ public abstract class RealmAbstractDAO {
     }
 
     public <T extends RealmObject> T read(final String docId, final Class<T> type) {
+        Realm _realm = Realm.getDefaultInstance();
         T model = null;
 
-        RealmQuery<T> query = realm.where(type);
+        RealmQuery<T> query = _realm.where(type);
         query.equalTo(DomainModelFieldNames.DocId.getStringValue(), docId);
         model = query.findFirst();
 
@@ -50,16 +48,30 @@ public abstract class RealmAbstractDAO {
     }
 
     public <T extends RealmObject> List<T> read(final Class<T> type) {
+        Realm _realm = Realm.getDefaultInstance();
         List<T> model = null;
 
-        RealmQuery<T> query = realm.where(type);
+        RealmQuery<T> query = _realm.where(type);
         model = query.findAll();
 
         return model;
     }
 
+    public <T extends RealmObject> T readSingleObject(final Class<T> type) {
+        Realm _realm = Realm.getDefaultInstance();
+
+        T model = null;
+
+        RealmQuery<T> query = _realm.where(type);
+        model = query.findFirst();
+
+        return model;
+    }
+
     public <T extends RealmObject> List<T> read(final Class<T> type, final String sortFieldName, final Sort sortOrder) {
-        RealmQuery<T> query = realm.where(type);
+        Realm _realm = Realm.getDefaultInstance();
+
+        RealmQuery<T> query = _realm.where(type);
         RealmResults<T> sortedList = query.findAll();
 
         sortedList.sort(sortFieldName, sortOrder);
@@ -67,9 +79,10 @@ public abstract class RealmAbstractDAO {
     }
 
     public <T extends RealmObject> boolean update(final T domainModel) {
+        Realm _realm = Realm.getDefaultInstance();
         success = false;
 
-        realm.executeTransaction(realm -> {
+        _realm.executeTransaction(realm -> {
             realm.copyToRealmOrUpdate(domainModel);
             success = true;
         });
@@ -78,9 +91,10 @@ public abstract class RealmAbstractDAO {
     }
 
     public <T extends RealmObject> boolean update(final List<T> domainModel) {
+        Realm _realm = Realm.getDefaultInstance();
         success = false;
 
-        realm.executeTransaction(realm -> {
+        _realm.executeTransaction(realm -> {
             realm.copyToRealmOrUpdate(domainModel);
             success = true;
         });
@@ -89,9 +103,10 @@ public abstract class RealmAbstractDAO {
     }
 
     public <T extends RealmObject> boolean delete(final String docId, final Class<T> type) {
+        Realm _realm = Realm.getDefaultInstance();
         success = false;
 
-        realm.executeTransaction(realm -> {
+        _realm.executeTransaction(realm -> {
             RealmQuery<T> query = realm.where(type);
 
             query.equalTo(DomainModelFieldNames.DocId.getStringValue(), docId);
@@ -107,9 +122,10 @@ public abstract class RealmAbstractDAO {
     }
 
     public <T extends RealmObject> boolean deleteAll(final Class<T> type) {
+        Realm _realm = Realm.getDefaultInstance();
         success = false;
 
-        realm.executeTransaction(realm -> {
+        _realm.executeTransaction(realm -> {
             RealmQuery<T> query = realm.where(type);
 
             RealmResults<T> result = query.findAll();

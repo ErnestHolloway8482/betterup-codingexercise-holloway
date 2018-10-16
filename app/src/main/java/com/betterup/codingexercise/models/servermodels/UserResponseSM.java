@@ -20,8 +20,6 @@ public class UserResponseSM {
 
     public String motivation;
 
-    @SerializedName("avatar")
-    @Expose
     public Avatar avatar;
 
     public String phone;

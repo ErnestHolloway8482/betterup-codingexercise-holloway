@@ -7,8 +7,6 @@ import android.widget.ImageView;
 
 import com.betterup.codingexercise.managers.ImageCacheManager;
 
-import javax.inject.Inject;
-
 /**
  * Defines a custom <strong>app:command</strong> attribute and binds the appropriate View event handlers to it.
  * This attribute can be used to bind a View's event (i.e. click) to an arbitrary method.
@@ -18,8 +16,15 @@ import javax.inject.Inject;
  * <p>
  */
 public class CommonViewBindings {
-    @Inject
     static ImageCacheManager imageCacheManager;
+
+    public static ImageCacheManager getImageCacheManager() {
+        return imageCacheManager;
+    }
+
+    public static void setImageCacheManager(final ImageCacheManager imageCacheManager) {
+        CommonViewBindings.imageCacheManager = imageCacheManager;
+    }
 
     /**
      * Binds <c>view</c>'s {@link View#setOnClickListener(View.OnClickListener)} to <strong>command</strong>.

@@ -3,11 +3,9 @@ package com.betterup.codingexercise.daos;
 import com.betterup.codingexercise.models.databasemodels.AccountInfoDBM;
 import com.betterup.codingexercise.models.databasemodels.OAuthTokenDBM;
 
-import io.realm.Realm;
-
 public class AccountInfoDAOImpl extends RealmAbstractDAO implements AccountInfoDAO {
-    public AccountInfoDAOImpl(final Realm realm) {
-        super(realm);
+    public AccountInfoDAOImpl() {
+        super();
     }
 
     @Override
@@ -31,7 +29,7 @@ public class AccountInfoDAOImpl extends RealmAbstractDAO implements AccountInfoD
     @Override
     public AccountInfoDBM getAccountInfo() {
         try {
-            return super.read(AccountInfoDBM.class).get(0);
+            return super.readSingleObject(AccountInfoDBM.class);
         } catch (Exception e) {
             return null;
         }
@@ -40,9 +38,19 @@ public class AccountInfoDAOImpl extends RealmAbstractDAO implements AccountInfoD
     @Override
     public OAuthTokenDBM getOauthToken() {
         try {
-            return super.read(OAuthTokenDBM.class).get(0);
+            return super.readSingleObject(OAuthTokenDBM.class);
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public boolean deleteAccountInfo() {
+        return super.deleteAll(AccountInfoDBM.class);
+    }
+
+    @Override
+    public boolean deleteOAuthToken() {
+        return super.deleteAll(OAuthTokenDBM.class);
     }
 }

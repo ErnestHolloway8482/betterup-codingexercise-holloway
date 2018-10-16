@@ -6,22 +6,24 @@ import android.content.Context;
 import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.application.BetterUpApplication;
 
+import org.mockito.Mockito;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ContextModule {
+public class AndroidTestContextModule {
     @Singleton
     @Provides
     public Context provideApplicationContext() {
-        return BetterUpApplication.getInstance();
+        return BetterUpApplication.getInstance().getApplicationContext();
     }
 
     @Singleton
     @Provides
     public Activity provideActivity() {
-        return MainActivity.getInstance();
+        return Mockito.mock(MainActivity.class);
     }
 }
