@@ -77,4 +77,9 @@ public class AccountFacade {
         databaseManager.closeDatabase();
         databaseManager.deleteDatabase();
     }
+
+    public void clearDataBaseItems(){
+        accountInfoDAO.deleteAccountInfo();
+        accountInfoDAO.deleteOAuthToken();
+    }
 }

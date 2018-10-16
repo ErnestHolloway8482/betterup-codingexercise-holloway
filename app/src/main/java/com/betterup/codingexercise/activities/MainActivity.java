@@ -1,6 +1,5 @@
 package com.betterup.codingexercise.activities;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -12,8 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.android.databinding.library.baseAdapters.BR;
 import com.betterup.codingexercise.R;
 import com.betterup.codingexercise.application.BetterUpApplication;
-import com.betterup.codingexercise.dimodules.AppComponent;
 import com.betterup.codingexercise.managers.NavigationManager;
+import com.betterup.codingexercise.managers.ResourceManager;
 import com.betterup.codingexercise.models.viewmodels.MainActivityVM;
 import com.betterup.codingexercise.utilities.BuildConfigUtility;
 import com.betterup.codingexercise.views.SplashScreen;
@@ -30,6 +29,9 @@ import javax.inject.Singleton;
 public class MainActivity extends AppCompatActivity {
     @Inject
     NavigationManager navigationManager;
+
+    @Inject
+    ResourceManager resourceManager;
 
     private static MainActivity instance;
 
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     private void setup() {
         BetterUpApplication.getAppComponent().inject(this);
 
-        viewModel = new MainActivityVM();
+        viewModel = new MainActivityVM(resourceManager);
         ViewDataBinding binding = DataBindingUtil.setContentView(this, R.layout.main_activity);
         binding.setVariable(BR.vm, viewModel);
 

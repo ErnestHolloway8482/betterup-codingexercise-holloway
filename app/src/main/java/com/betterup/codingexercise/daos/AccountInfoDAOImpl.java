@@ -43,4 +43,14 @@ public class AccountInfoDAOImpl extends RealmAbstractDAO implements AccountInfoD
             return null;
         }
     }
+
+    @Override
+    public boolean deleteAccountInfo() {
+        return super.deleteAll(AccountInfoDBM.class);
+    }
+
+    @Override
+    public boolean deleteOAuthToken() {
+        return super.deleteAll(OAuthTokenDBM.class);
+    }
 }

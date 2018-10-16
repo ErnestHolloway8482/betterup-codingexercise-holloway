@@ -10,7 +10,6 @@ import com.betterup.codingexercise.managers.AlertDialogManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
-import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.models.servermodels.UserResponseSM;
 import com.betterup.codingexercise.models.viewmodels.AccountInfoVM;
 import com.betterup.codingexercise.restclients.AccountRestClient;
@@ -38,9 +37,6 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     AlertDialogManager alertDialogManager;
 
     @Inject
-    ScreenManager screenManager;
-
-    @Inject
     ResourceManager resourceManager;
 
     @Inject
@@ -63,6 +59,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     @After
     public void tearDown() {
         super.tearDown();
+        accountFacade.clearDataBaseItems();
     }
 
     @Test

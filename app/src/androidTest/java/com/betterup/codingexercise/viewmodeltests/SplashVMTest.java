@@ -54,6 +54,9 @@ public class SplashVMTest extends BaseAndroidUnitTest {
     public void tearDown(){
         super.tearDown();
         navigationManager.clearAllViewsFromStack();
+        accountFacade.clearDataBaseItems();
+
+        sleep(1);
     }
 
     @Test

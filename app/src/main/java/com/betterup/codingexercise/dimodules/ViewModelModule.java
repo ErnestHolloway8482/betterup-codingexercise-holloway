@@ -20,8 +20,8 @@ import dagger.Provides;
 public class ViewModelModule {
     @Provides
     @Singleton
-    public static MainActivityVM provideBaseVM() {
-        return new MainActivityVM();
+    public static MainActivityVM provideMainActivityVM(final ResourceManager resourceManager) {
+        return new MainActivityVM(resourceManager);
     }
 
     @Provides
@@ -35,8 +35,8 @@ public class ViewModelModule {
     }
 
     @Provides
-    public static AccountInfoVM provideAccountInfoVM(final AccountFacade accountFacade, final NetworkManager networkManager) {
-        return new AccountInfoVM(accountFacade, networkManager);
+    public static AccountInfoVM provideAccountInfoVM(final AccountFacade accountFacade, final NetworkManager networkManager, final ResourceManager resourceManager, final AlertDialogManager alertDialogManager) {
+        return new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager);
     }
 
     @Provides

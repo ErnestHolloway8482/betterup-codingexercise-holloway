@@ -57,7 +57,7 @@ public class LoginVMTest extends BaseAndroidUnitTest {
     private LoginVM loginVM;
 
     @Before
-    public void setup(){
+    public void setup() {
         super.setup();
         getTestAppComponent().inject(this);
 
@@ -65,12 +65,13 @@ public class LoginVMTest extends BaseAndroidUnitTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         super.tearDown();
+        accountFacade.clearDataBaseItems();
     }
 
     @Test
-    public void navigateToAccountInformationScreenTest(){
+    public void navigateToAccountInformationScreenTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
 
         OAuthResponseSM response = new OAuthResponseSM();
@@ -87,7 +88,7 @@ public class LoginVMTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void displayNetworkErrorTest(){
+    public void displayNetworkErrorTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(false);
 
         loginVM.login();
@@ -95,11 +96,11 @@ public class LoginVMTest extends BaseAndroidUnitTest {
         String title = context.getString(R.string.network_error_title);
         String message = context.getString(R.string.network_error_message);
 
-        Mockito.verify(alertDialogManager ,Mockito.atMost(1)).displayAlertMessage(title, message);
+        Mockito.verify(alertDialogManager, Mockito.atMost(1)).displayAlertMessage(title, message);
     }
 
     @Test
-    public void displayLoginErrorTest(){
+    public void displayLoginErrorTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(null);
@@ -111,6 +112,6 @@ public class LoginVMTest extends BaseAndroidUnitTest {
         String title = context.getString(R.string.login_error_title);
         String message = context.getString(R.string.login_error_message);
 
-        Mockito.verify(alertDialogManager ,Mockito.atMost(1)).displayAlertMessage(title, message);
+        Mockito.verify(alertDialogManager, Mockito.atMost(1)).displayAlertMessage(title, message);
     }
 }
