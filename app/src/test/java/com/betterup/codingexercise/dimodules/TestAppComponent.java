@@ -3,6 +3,7 @@ package com.betterup.codingexercise.dimodules;
 
 import com.betterup.codingexercise.BaseUnitTest;
 import com.betterup.codingexercise.unittests.AccountInfoDataMapperTest;
+import com.betterup.codingexercise.unittests.NavigationManagerTest;
 
 import javax.inject.Singleton;
 
@@ -21,4 +22,5 @@ import dagger.Component;
 public interface TestAppComponent extends AppComponent {
     void inject(final BaseUnitTest baseUnitTest);
     void inject(final AccountInfoDataMapperTest accountInfoDataMapperTest);
+    void inject(final NavigationManagerTest navigationManagerTest);
 }
