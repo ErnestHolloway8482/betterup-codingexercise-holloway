@@ -5,7 +5,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class AccountInfoDBM extends RealmObject {
     @PrimaryKey
-    private int id;
+    private String id;
 
     //Personal Information
     private String title;
@@ -24,11 +24,11 @@ public class AccountInfoDBM extends RealmObject {
     private boolean smsNotificationEnabled;
     private boolean emailNotificationEnabled;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(final int id) {
+    public void setId(final String id) {
         this.id = id;
     }
 

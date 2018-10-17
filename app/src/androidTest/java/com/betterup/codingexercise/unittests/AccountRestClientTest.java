@@ -12,7 +12,6 @@ import com.betterup.codingexercise.restclients.AccountRestClientImpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -97,7 +96,6 @@ public class AccountRestClientTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    @Ignore
     public void getAccountInfoErrorTest() {
         String headerFormat = "%s %s";
         String header = String.format(headerFormat, "error", "token");

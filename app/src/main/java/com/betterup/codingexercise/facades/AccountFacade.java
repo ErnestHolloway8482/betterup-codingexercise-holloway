@@ -34,6 +34,8 @@ public class AccountFacade {
     }
 
     public boolean login(final String username, final String password) {
+        clearDataBaseItems();
+        
         LoginRequestSM request = new LoginRequestSM();
         request.username = username;
         request.password = password;
