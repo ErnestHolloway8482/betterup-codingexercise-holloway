@@ -9,7 +9,7 @@ import android.util.Log;
  * This utility is used as a convenience method for logging debug data within the android console.
  */
 public class LoggerUtils {
-    private static final String LOG_TAG = "QV21:";
+    private static final String LOG_TAG = "BetterUp:";
 
     public static void log(String message) {
         if (BuildConfigUtility.isLoggingEnabled()) {
