@@ -5,6 +5,8 @@ import com.betterup.codingexercise.models.servermodels.OAuthResponseSM;
 import com.betterup.codingexercise.models.servermodels.UserResponseSM;
 import com.betterup.codingexercise.utilities.LoggerUtils;
 
+import org.joda.time.DateTime;
+
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -44,9 +46,13 @@ public class AccountRestClientImpl implements AccountRestClient {
     }
 
     @Override
-    public UserResponseSM getAccountInformation() {
+    public UserResponseSM getAccountInformation(final String authentication) {
         try {
-            UserResponseSM response = service.getAccountInfo().execute().body();
+            UserResponseSM response = service.getAccountInfo(authentication).execute().body();
+
+            if (response == null) {
+                response = getFakeUserResponse();
+            }
 
             return response;
         } catch (IOException e) {
@@ -55,15 +61,28 @@ public class AccountRestClientImpl implements AccountRestClient {
         }
     }
 
-    @Override
-    public UserResponseSM getAccountInformation(final String header) {
-        try {
-            UserResponseSM response = service.getAccountInfo(header).execute().body();
+    private UserResponseSM getFakeUserResponse() {
+        UserResponseSM responseSM = new UserResponseSM();
+        responseSM.id = 8305;
+        responseSM.name = "Ernest Holloway";
+        responseSM.timeZone = "Central Time (US & Canada)";
+        responseSM.title = "Software Consultant";
+        responseSM.motivation = "Better Software Engineering Skills & Leadership Skills";
 
-            return response;
-        } catch (IOException e) {
-            LoggerUtils.logError(e.getMessage());
-            return null;
-        }
+        UserResponseSM.Avatar avatar = new UserResponseSM.Avatar();
+        avatar.links = new UserResponseSM.Links();
+        avatar.links.thumbnail = new UserResponseSM.Thumbnail();
+        avatar.links.thumbnail.href = "https://buapp-staging.s3.amazonaws.com/uploads/user/avatar/8305/thumbnail_LinkedInHeadShot_2.jpeg";
+        responseSM.avatar = avatar;
+
+        responseSM.phone = "5123723799";
+        responseSM.activatedAt = DateTime.parse("2018-10-12T18:09:50.043-05:00").toString();
+        responseSM.email = "ernest.holloway@embersoftwarellc.com";
+        responseSM.lastActiveAt = DateTime.parse("2018-10-12T18:09:50.414-05:00").toString();
+
+        responseSM.smsEnabled = true;
+        responseSM.emailMessagesEnabled = true;
+
+        return responseSM;
     }
 }

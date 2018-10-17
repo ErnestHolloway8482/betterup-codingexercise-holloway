@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".activities.MainActivity">
 
     <data>
         <import type="android.view.View"/>
+        <import type="com.betterup.codingexercise.bindings.Converter"/>
+        <import type="java.lang.String"/>
 
         <variable
             name="vm"
@@ -15,5 +17,137 @@
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white">
+
+        <ScrollView android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatImageView android:id="@+id/wellLogo"
+                                                              android:layout_width="128dp"
+                                                              android:layout_height="128dp"
+                                                              android:layout_gravity="center_horizontal"
+                                                              android:layout_margin="3dp"
+                                                              tools:src="@drawable/ic_account_circle_black"
+                                                              app:imageUrl="@{vm.accountInfoDOM.avatarUrl}"
+                                                              app:tint="@color/colorAccent"/>
+
+                <TextView android:id="@+id/personalInformationTitle" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:textSize="@dimen/text_size_28sp"
+                          android:text="@string/personal_information_title"
+                          android:textStyle="bold"
+                          tools:text="Personal Information"/>
+
+                <include layout="@layout/line_seperator"/>
+
+                <TextView android:id="@+id/name" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/name_label, vm.accountInfoDOM.name)}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="Name"/>
+
+                <TextView android:id="@+id/title" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/title_label, vm.accountInfoDOM.title)}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="Title"/>
+
+                <TextView android:id="@+id/motivation" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/motivation_label, vm.accountInfoDOM.motivation)}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="Motivation"/>
+
+                <TextView android:id="@+id/email" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/email_label, vm.accountInfoDOM.email)}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="Email"/>
+
+                <TextView android:id="@+id/phoneNumber" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/phone_number_label, vm.accountInfoDOM.phoneNumber)}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="Phone Number"/>
+
+                <include layout="@layout/line_seperator_small"/>
+
+                <TextView android:id="@+id/timeZonePreferencesTitle" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:textSize="@dimen/text_size_28sp"
+                          android:text="@string/timezone_preferences_title"
+                          android:textStyle="bold"
+                          tools:text="Time Zone"/>
+
+                <include layout="@layout/line_seperator"/>
+
+                <TextView android:id="@+id/timeZone" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/time_zone_label, vm.accountInfoDOM.timeZonePreference)}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="Time Zone"/>
+
+                <include layout="@layout/line_seperator_small"/>
+
+                <TextView android:id="@+id/notificationPreferencesTitle" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:textSize="@dimen/text_size_28sp"
+                          android:text="@string/notification_preferences_title"
+                          android:textStyle="bold"
+                          tools:text="Notifications"/>
+
+                <include layout="@layout/line_seperator"/>
+
+                <TextView android:id="@+id/smsNotificationEnabled" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/sms_notification_enabled_label, Converter.convertBooleanToString(vm.accountInfoDOM.smsNotificationEnabled))}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="SMS Notification"/>
+
+                <TextView android:id="@+id/emailNotificationEnabled" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/layout_margin_normal"
+                          android:text="@{String.format(@string/email_notification_enabled_label, Converter.convertBooleanToString(vm.accountInfoDOM.smsNotificationEnabled))}"
+                          android:textColor="@color/colorPrimary"
+                          android:textSize="@dimen/text_size_16sp"
+                          android:textStyle="bold"
+                          tools:text="Email Notification"/>
+
+                <include layout="@layout/line_seperator_small"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
     </RelativeLayout>
 </layout>

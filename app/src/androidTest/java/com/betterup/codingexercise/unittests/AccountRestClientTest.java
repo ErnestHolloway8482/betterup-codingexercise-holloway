@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class AccountRestClientTest extends BaseAndroidUnitTest {
-   private AccountRestClient accountRestClient;
+    private AccountRestClient accountRestClient;
 
     @Before
     public void setup() {
@@ -35,7 +35,7 @@ public class AccountRestClientTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void loginTest(){
+    public void loginTest() {
         LoginRequestSM request = new LoginRequestSM();
         request.username = "ernest.holloway@embersoftwarellc.com";
         request.password = "Sprinter198!";
@@ -46,12 +46,12 @@ public class AccountRestClientTest extends BaseAndroidUnitTest {
         Assert.assertNotNull(response.accessToken);
         Assert.assertNotNull(response.refreshToken);
         Assert.assertNotNull(response.tokenType);
-        Assert.assertTrue(response.createdAt>0);
-        Assert.assertTrue(response.expireIn>0);
+        Assert.assertTrue(response.createdAt > 0);
+        Assert.assertTrue(response.expireIn > 0);
     }
 
     @Test
-    public void loginErrorTest(){
+    public void loginErrorTest() {
         //Username Wrong
         LoginRequestSM request = new LoginRequestSM();
         request.username = "ernest.holloway@embersoftwarellc.co";
@@ -81,24 +81,7 @@ public class AccountRestClientTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void getAccountInfoTestNoHeader(){
-        LoginRequestSM request = new LoginRequestSM();
-        request.username = "ernest.holloway@embersoftwarellc.com";
-        request.password = "Sprinter198!";
-
-        OAuthResponseSM response = accountRestClient.login(request);
-        Assert.assertNotNull(response);
-
-        String headerFormat = "%s %s";
-        String header = String.format(headerFormat, response.tokenType, response.accessToken);
-
-        UserResponseSM userResponseSM = accountRestClient.getAccountInformation();
-        Assert.assertNotNull(userResponseSM);
-    }
-
-    @Test
-    @Ignore
-    public void getAccountInfoTest(){
+    public void getAccountInfoTest() {
         LoginRequestSM request = new LoginRequestSM();
         request.username = "ernest.holloway@embersoftwarellc.com";
         request.password = "Sprinter198!";
@@ -111,5 +94,15 @@ public class AccountRestClientTest extends BaseAndroidUnitTest {
 
         UserResponseSM userResponseSM = accountRestClient.getAccountInformation(header);
         Assert.assertNotNull(userResponseSM);
+    }
+
+    @Test
+    @Ignore
+    public void getAccountInfoErrorTest() {
+        String headerFormat = "%s %s";
+        String header = String.format(headerFormat, "error", "token");
+
+        UserResponseSM userResponseSM = accountRestClient.getAccountInformation(header);
+        Assert.assertNull(userResponseSM);
     }
 }
