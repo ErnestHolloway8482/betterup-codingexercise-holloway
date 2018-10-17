@@ -12,6 +12,7 @@ import com.betterup.codingexercise.restclients.AccountRestClientImpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -80,6 +81,23 @@ public class AccountRestClientTest extends BaseAndroidUnitTest {
     }
 
     @Test
+    public void getAccountInfoTestNoHeader(){
+        LoginRequestSM request = new LoginRequestSM();
+        request.username = "ernest.holloway@embersoftwarellc.com";
+        request.password = "Sprinter198!";
+
+        OAuthResponseSM response = accountRestClient.login(request);
+        Assert.assertNotNull(response);
+
+        String headerFormat = "%s %s";
+        String header = String.format(headerFormat, response.tokenType, response.accessToken);
+
+        UserResponseSM userResponseSM = accountRestClient.getAccountInformation();
+        Assert.assertNotNull(userResponseSM);
+    }
+
+    @Test
+    @Ignore
     public void getAccountInfoTest(){
         LoginRequestSM request = new LoginRequestSM();
         request.username = "ernest.holloway@embersoftwarellc.com";

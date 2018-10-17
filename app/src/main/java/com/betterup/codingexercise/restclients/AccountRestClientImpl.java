@@ -45,16 +45,14 @@ public class AccountRestClientImpl implements AccountRestClient {
 
     @Override
     public UserResponseSM getAccountInformation() {
-//        try {
-//            Response response = service.getAccountInfoBodyOnly().execute();
-//
-//            return (UserResponseSM) response.body();
-//        } catch (IOException e) {
-//            LoggerUtils.logError(e.getMessage());
-//            return null;
-//        }
+        try {
+            UserResponseSM response = service.getAccountInfo().execute().body();
 
-        return null;
+            return response;
+        } catch (IOException e) {
+            LoggerUtils.logError(e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -67,10 +65,5 @@ public class AccountRestClientImpl implements AccountRestClient {
             LoggerUtils.logError(e.getMessage());
             return null;
         }
-    }
-
-
-    public OAuthResponseSM getAccessTokenFromRefreshToken(final String refreshToken) {
-        return null;
     }
 }

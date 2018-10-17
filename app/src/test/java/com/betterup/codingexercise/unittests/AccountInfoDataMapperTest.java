@@ -96,7 +96,7 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
     }
 
     @Test
-    public void mapOAuthResponseSMToOAuthTokenDBMTest(){
+    public void mapOAuthResponseSMToOAuthTokenDBMTest() {
         OAuthResponseSM oAuthResponseSM = getOAuthResponseSM();
 
         OAuthTokenDBM oAuthTokenDBM = accountInfoDataMapper.map(oAuthResponseSM);
@@ -108,7 +108,7 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
     }
 
     @Test
-    public void mapOAuthTokenDBMToOAuthTokenDOMTest(){
+    public void mapOAuthTokenDBMToOAuthTokenDOMTest() {
         OAuthTokenDBM oAuthTokenDBM = getOAuthTokenDBM();
 
         OAuthTokenDOM oAuthTokenDOM = accountInfoDataMapper.map(oAuthTokenDBM);
@@ -161,7 +161,7 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
         return accountInfoDBM;
     }
 
-    private OAuthResponseSM getOAuthResponseSM(){
+    private OAuthResponseSM getOAuthResponseSM() {
         OAuthResponseSM oAuthResponseSM = new OAuthResponseSM();
         oAuthResponseSM.accessToken = "accessToken";
         oAuthResponseSM.refreshToken = "refreshToken";
@@ -170,7 +170,7 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
         return oAuthResponseSM;
     }
 
-    private OAuthTokenDBM getOAuthTokenDBM(){
+    private OAuthTokenDBM getOAuthTokenDBM() {
         OAuthTokenDBM oAuthTokenDBM = new OAuthTokenDBM();
 
         oAuthTokenDBM.setAccessToken("accessToken");

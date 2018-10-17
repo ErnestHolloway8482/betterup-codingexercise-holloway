@@ -1,5 +1,6 @@
 package com.betterup.codingexercise.models.viewmodels;
 
+import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.ScreenManager;
@@ -34,6 +35,13 @@ public class SplashVM extends BaseVM {
         delayNavigationTimeToCorrectScreen();
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        MainActivity.getInstance().getViewModel().dismissToolbar();
+        cleanupSubscribers();
+    }
+
     private void delayNavigationTimeToCorrectScreen() {
         int navigationDelay = 2;
 
@@ -59,6 +67,7 @@ public class SplashVM extends BaseVM {
 
         navigationManager.clearAllViewsFromStack();
         navigationManager.push(loginScreen);
+        navigationManager.showScreen();
     }
 
     private void navigateToAccountInfoScreen() {
@@ -66,6 +75,7 @@ public class SplashVM extends BaseVM {
 
         navigationManager.clearAllViewsFromStack();
         navigationManager.push(accountInfoScreen);
+        navigationManager.showScreen();
     }
 
     private void cleanupSubscribers() {

@@ -12,6 +12,9 @@ import retrofit2.http.POST;
 
 public interface AccountRestClientRetrofit {
     @GET(EndPointURL.ACCOUNT_URL)
+    Call<UserResponseSM> getAccountInfo();
+
+    @GET(EndPointURL.ACCOUNT_URL)
     Call<UserResponseSM> getAccountInfo(@Header("Authorization") String accessTokenHeader);
 
     @FormUrlEncoded
