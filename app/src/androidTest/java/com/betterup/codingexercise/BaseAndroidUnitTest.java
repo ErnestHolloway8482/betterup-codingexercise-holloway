@@ -18,8 +18,6 @@ import javax.inject.Inject;
 public class BaseAndroidUnitTest {
     private AndroidTestAppComponent androidTestAppComponent;
 
-    protected final String TEST_DATABASE_FILENAME = "well_data_android_test";
-
     @Inject
     public DatabaseManager databaseManager;
 
@@ -33,12 +31,12 @@ public class BaseAndroidUnitTest {
     }
 
     @Before
-    public void setup(){
+    public void setup() {
         databaseManager.openDatabase(null);
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         databaseManager.closeDatabase();
     }
 
@@ -48,8 +46,8 @@ public class BaseAndroidUnitTest {
 
     protected void sleep(final int numberOfSeconds) {
         try {
-            int timeInSecobds = 1000 * numberOfSeconds;
-            Thread.sleep(timeInSecobds);
+            int timeInSeconds = 1000 * numberOfSeconds;
+            Thread.sleep(timeInSeconds);
         } catch (InterruptedException e) {
             LoggerUtils.logError(e.getMessage());
         }
