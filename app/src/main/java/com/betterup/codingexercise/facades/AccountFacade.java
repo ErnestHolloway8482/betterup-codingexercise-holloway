@@ -35,7 +35,7 @@ public class AccountFacade {
 
     public boolean login(final String username, final String password) {
         clearDataBaseItems();
-        
+
         LoginRequestSM request = new LoginRequestSM();
         request.username = username;
         request.password = password;
@@ -56,7 +56,10 @@ public class AccountFacade {
     public AccountInfoDOM getAccountInfoFromServer() {
         OAuthTokenDBM databaseModel = accountInfoDAO.getOauthToken();
 
-        UserResponseSM serverResponse = accountRestClient.getAccountInformation(databaseModel.getAccessToken());
+        String headerFormat = "%s %s";
+        String header = String.format(headerFormat, "Bearer", databaseModel.getAccessToken());
+
+        UserResponseSM serverResponse = accountRestClient.getAccountInformation(header);
 
         AccountInfoDBM accountInfoDBM = accountInfoDataMapper.map(serverResponse);
 
