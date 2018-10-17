@@ -2,6 +2,7 @@ package com.betterup.codingexercise;
 
 import com.betterup.codingexercise.dimodules.DaggerTestAppComponent;
 import com.betterup.codingexercise.dimodules.TestAppComponent;
+import com.betterup.codingexercise.managers.DatabaseManager;
 import com.betterup.codingexercise.utilities.BuildConfigUtility;
 import com.betterup.codingexercise.utilities.LoggerUtils;
 
@@ -9,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import javax.inject.Inject;
 
 @RunWith(JUnit4.class)
 public class BaseUnitTest {
