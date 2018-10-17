@@ -46,6 +46,14 @@ public class Converter {
         return Double.toString(value);
     }
 
+    public static String convertBooleanToString(final boolean value){
+        if(value){
+            return "Enabled";
+        } else{
+            return "Disabled";
+        }
+    }
+
     private static int getDefaultValue() {
         return 0;
     }

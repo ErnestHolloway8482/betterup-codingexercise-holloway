@@ -72,7 +72,7 @@ public class CommonViewBindings {
      * @param layoutManager The layout manager that the {@link RecyclerView} will use.
      */
     @BindingAdapter("app:layoutManager")
-    public static void bindLoadImage(final RecyclerView view, final RecyclerView.LayoutManager layoutManager) {
+    public static void bindlayoutManager(final RecyclerView view, final RecyclerView.LayoutManager layoutManager) {
         view.setLayoutManager(layoutManager);
     }
 

@@ -34,6 +34,8 @@ public class AccountFacade {
     }
 
     public boolean login(final String username, final String password) {
+        clearDataBaseItems();
+
         LoginRequestSM request = new LoginRequestSM();
         request.username = username;
         request.password = password;
@@ -45,41 +47,46 @@ public class AccountFacade {
         return accountInfoDAO.saveOAuthToken(oAuthTokenDBM);
     }
 
-    public OAuthTokenDOM getOAuthTokenFromCache(){
+    public OAuthTokenDOM getOAuthTokenFromCache() {
         OAuthTokenDBM databaseModel = accountInfoDAO.getOauthToken();
 
         return accountInfoDataMapper.map(databaseModel);
     }
 
     public AccountInfoDOM getAccountInfoFromServer() {
-        UserResponseSM serverResponse = accountRestClient.getAccountInformation();
+        OAuthTokenDBM databaseModel = accountInfoDAO.getOauthToken();
+
+        String headerFormat = "%s %s";
+        String header = String.format(headerFormat, "Bearer", databaseModel.getAccessToken());
+
+        UserResponseSM serverResponse = accountRestClient.getAccountInformation(header);
 
         AccountInfoDBM accountInfoDBM = accountInfoDataMapper.map(serverResponse);
 
-        if(accountInfoDAO.saveAccountInfo(accountInfoDBM)){
+        if (accountInfoDAO.saveAccountInfo(accountInfoDBM)) {
             return accountInfoDataMapper.map(accountInfoDBM);
-        } else{
+        } else {
             return null;
         }
     }
 
-    public AccountInfoDOM getAccountInfoFromCache(){
+    public AccountInfoDOM getAccountInfoFromCache() {
         AccountInfoDBM accountInfoDBM = accountInfoDAO.getAccountInfo();
 
         return accountInfoDataMapper.map(accountInfoDBM);
     }
 
-    public void closeDatabase(){
+    public void closeDatabase() {
         databaseManager.closeDatabase();
     }
 
-    public boolean removeDatabase(){
+    public boolean removeDatabase() {
         databaseManager.closeDatabase();
 
         return databaseManager.deleteDatabase();
     }
 
-    public void clearDataBaseItems(){
+    public void clearDataBaseItems() {
         accountInfoDAO.deleteAccountInfo();
         accountInfoDAO.deleteOAuthToken();
     }

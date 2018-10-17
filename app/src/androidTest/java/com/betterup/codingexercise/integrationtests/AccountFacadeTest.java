@@ -43,9 +43,9 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void loginTest(){
+    public void loginTest() {
         OAuthResponseSM response = new OAuthResponseSM();
-        response.token = "token";
+        response.accessToken = "accessToken";
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
 
@@ -53,16 +53,16 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void loginErrorTest(){
+    public void loginErrorTest() {
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(null);
 
         Assert.assertFalse(accountFacade.login("username", "password"));
     }
 
     @Test
-    public void getOAuthTokenFromCacheTest(){
+    public void getOAuthTokenFromCacheTest() {
         OAuthResponseSM response = new OAuthResponseSM();
-        response.token = "token";
+        response.accessToken = "accessToken";
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
 
@@ -71,11 +71,11 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
         OAuthTokenDOM oAuthTokenDOM = accountFacade.getOAuthTokenFromCache();
 
         Assert.assertNotNull(oAuthTokenDOM);
-        Assert.assertEquals(response.token, oAuthTokenDOM.token);
+        Assert.assertEquals(response.accessToken, oAuthTokenDOM.accessToken);
     }
 
     @Test
-    public void getOAuthTokenFromCacheErrorTest(){
+    public void getOAuthTokenFromCacheErrorTest() {
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(null);
 
         Assert.assertFalse(accountFacade.login("username", "password"));
@@ -84,47 +84,47 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void getAccountInfoFromServerTest(){
-        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+    public void getAccountInfoFromServerTest() {
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
         Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
     }
 
     @Test
-    public void getAccountInfoFromServerErrorTest(){
-        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(null);
+    public void getAccountInfoFromServerErrorTest() {
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(null);
 
         Assert.assertNull(accountFacade.getAccountInfoFromServer());
     }
 
     @Test
-    public void getAccountInfoFromCacheTest(){
-        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+    public void getAccountInfoFromCacheTest() {
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
         Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
         Assert.assertNotNull(accountFacade.getAccountInfoFromCache());
     }
 
     @Test
-    public void getAccountInfoFromCacheErrorTest(){
-        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(null);
+    public void getAccountInfoFromCacheErrorTest() {
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(null);
 
         Assert.assertNull(accountFacade.getAccountInfoFromServer());
         Assert.assertNull(accountFacade.getAccountInfoFromCache());
     }
 
     @Test
-    public void removeDatabaseTest(){
+    public void removeDatabaseTest() {
         Assert.assertTrue(accountFacade.removeDatabase());
     }
 
     @Test
-    public void clearDatabaseItemsTest(){
+    public void clearDatabaseItemsTest() {
         OAuthResponseSM response = new OAuthResponseSM();
-        response.token = "token";
+        response.accessToken = "accessToken";
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
-        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
         Assert.assertTrue(accountFacade.login("username", "password"));
         Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
@@ -140,7 +140,7 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
 
     private UserResponseSM getUserResponse() {
         UserResponseSM responseSM = new UserResponseSM();
-        responseSM.id = 1;
+        responseSM.id = "1";
         responseSM.name = "name";
         responseSM.timeZone = "CST";
         responseSM.title = "title";

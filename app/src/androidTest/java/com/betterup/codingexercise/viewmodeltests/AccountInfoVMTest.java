@@ -89,7 +89,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     @Test
     public void getAccountInfoTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
-        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
         accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager);
 
@@ -98,7 +98,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
 
     private UserResponseSM getUserResponse() {
         UserResponseSM responseSM = new UserResponseSM();
-        responseSM.id = 1;
+        responseSM.id = "1";
         responseSM.name = "name";
         responseSM.timeZone = "CST";
         responseSM.title = "title";

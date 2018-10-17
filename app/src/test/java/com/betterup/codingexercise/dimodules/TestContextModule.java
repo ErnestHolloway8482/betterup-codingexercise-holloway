@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.application.BetterUpApplication;
+import com.betterup.codingexercise.models.viewmodels.MainActivityVM;
 
 import org.mockito.Mockito;
 
@@ -24,6 +25,9 @@ public class TestContextModule {
     @Singleton
     @Provides
     public Activity provideActivity() {
+        MainActivity mainActivity = Mockito.mock(MainActivity.class);
+        Mockito.when(mainActivity.getViewModel()).thenReturn(Mockito.mock(MainActivityVM.class));
+
         return Mockito.mock(MainActivity.class);
     }
 }

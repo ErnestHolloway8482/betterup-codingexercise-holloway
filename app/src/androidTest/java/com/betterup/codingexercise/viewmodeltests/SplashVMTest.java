@@ -45,13 +45,13 @@ public class SplashVMTest extends BaseAndroidUnitTest {
     private SplashVM splashVM;
 
     @Before
-    public void setup(){
+    public void setup() {
         super.setup();
         getTestAppComponent().inject(this);
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         super.tearDown();
         navigationManager.clearAllViewsFromStack();
         accountFacade.clearDataBaseItems();
@@ -60,7 +60,7 @@ public class SplashVMTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void navigateToLoginScreenTest(){
+    public void navigateToLoginScreenTest() {
         splashVM = new SplashVM(accountFacade, navigationManager, screenManager);
 
         sleep(4);
@@ -69,9 +69,10 @@ public class SplashVMTest extends BaseAndroidUnitTest {
         Assert.assertTrue(navigationManager.isOnLastScreen());
         Assert.assertTrue(navigationManager.peek() instanceof LoginScreen);
     }
+
     @Test
-    public void navigateToAccountInfoScreenTest(){
-        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+    public void navigateToAccountInfoScreenTest() {
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
         Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
 
@@ -83,9 +84,9 @@ public class SplashVMTest extends BaseAndroidUnitTest {
         Assert.assertTrue(navigationManager.peek() instanceof AccountInfoScreen);
     }
 
-    private UserResponseSM getUserResponse(){
+    private UserResponseSM getUserResponse() {
         UserResponseSM responseSM = new UserResponseSM();
-        responseSM.id = 1;
+        responseSM.id = "1";
         responseSM.name = "name";
         responseSM.timeZone = "CST";
         responseSM.title = "title";
@@ -105,6 +106,6 @@ public class SplashVMTest extends BaseAndroidUnitTest {
         responseSM.smsEnabled = true;
         responseSM.emailMessagesEnabled = true;
 
-        return  responseSM;
+        return responseSM;
     }
 }

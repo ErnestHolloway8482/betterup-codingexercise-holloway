@@ -38,19 +38,19 @@ public class AccountInfoDAOTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void saveAccountInfoTest(){
+    public void saveAccountInfoTest() {
         Assert.assertTrue(accountInfoDAO.saveAccountInfo(new AccountInfoDBM()));
     }
 
     @Test
-    public void saveOAuthTokenTest(){
+    public void saveOAuthTokenTest() {
         Assert.assertTrue(accountInfoDAO.saveOAuthToken(new OAuthTokenDBM()));
     }
 
     @Test
-    public void getAccountInfoTest(){
+    public void getAccountInfoTest() {
         AccountInfoDBM databaseModel = new AccountInfoDBM();
-        databaseModel.setId(1000);
+        databaseModel.setId("1000");
 
         Assert.assertTrue(accountInfoDAO.saveAccountInfo(databaseModel));
 
@@ -61,29 +61,29 @@ public class AccountInfoDAOTest extends BaseAndroidUnitTest {
     }
 
     @Test
-    public void getOauthTokenTest(){
+    public void getOauthTokenTest() {
         String uuid = UUID.randomUUID().toString();
 
         OAuthTokenDBM databaseModel = new OAuthTokenDBM();
-        databaseModel.setToken(uuid);
+        databaseModel.setAccessToken(uuid);
 
         Assert.assertTrue(accountInfoDAO.saveOAuthToken(databaseModel));
 
         OAuthTokenDBM retrievedDatabaseModel = accountInfoDAO.getOauthToken();
 
         Assert.assertNotNull(retrievedDatabaseModel);
-        Assert.assertEquals(databaseModel.getToken(), retrievedDatabaseModel.getToken());
+        Assert.assertEquals(databaseModel.getAccessToken(), retrievedDatabaseModel.getAccessToken());
     }
 
     @Test
-    public void deleteAccountInfoTest(){
+    public void deleteAccountInfoTest() {
         Assert.assertTrue(accountInfoDAO.saveAccountInfo(new AccountInfoDBM()));
         Assert.assertTrue(accountInfoDAO.deleteAccountInfo());
         Assert.assertNull(accountInfoDAO.getAccountInfo());
     }
 
     @Test
-    public void deleteOAuthTokenTest(){
+    public void deleteOAuthTokenTest() {
         Assert.assertTrue(accountInfoDAO.saveOAuthToken(new OAuthTokenDBM()));
         Assert.assertTrue(accountInfoDAO.deleteOAuthToken());
         Assert.assertNull(accountInfoDAO.getOauthToken());

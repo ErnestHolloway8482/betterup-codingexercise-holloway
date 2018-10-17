@@ -96,23 +96,27 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
     }
 
     @Test
-    public void mapOAuthResponseSMToOAuthTokenDBMTest(){
+    public void mapOAuthResponseSMToOAuthTokenDBMTest() {
         OAuthResponseSM oAuthResponseSM = getOAuthResponseSM();
 
         OAuthTokenDBM oAuthTokenDBM = accountInfoDataMapper.map(oAuthResponseSM);
 
         Assert.assertNotNull(oAuthTokenDBM);
-        Assert.assertEquals(oAuthResponseSM.token, oAuthTokenDBM.getToken());
+        Assert.assertEquals(oAuthResponseSM.accessToken, oAuthTokenDBM.getAccessToken());
+        Assert.assertEquals(oAuthResponseSM.refreshToken, oAuthTokenDBM.getRefreshToken());
+        Assert.assertEquals(oAuthResponseSM.expireIn, oAuthTokenDBM.getExpiresInMinutes());
     }
 
     @Test
-    public void mapOAuthTokenDBMToOAuthTokenDOMTest(){
+    public void mapOAuthTokenDBMToOAuthTokenDOMTest() {
         OAuthTokenDBM oAuthTokenDBM = getOAuthTokenDBM();
 
         OAuthTokenDOM oAuthTokenDOM = accountInfoDataMapper.map(oAuthTokenDBM);
 
         Assert.assertNotNull(oAuthTokenDBM);
-        Assert.assertEquals(oAuthTokenDBM.getToken(), oAuthTokenDOM.token);
+        Assert.assertEquals(oAuthTokenDBM.getAccessToken(), oAuthTokenDOM.accessToken);
+        Assert.assertEquals(oAuthTokenDBM.getRefreshToken(), oAuthTokenDOM.refreshToken);
+        Assert.assertEquals(oAuthTokenDBM.getExpiresInMinutes(), oAuthTokenDOM.expiresInMinutes);
     }
 
     private UserResponseSM getUserResponse() {
@@ -157,17 +161,21 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
         return accountInfoDBM;
     }
 
-    private OAuthResponseSM getOAuthResponseSM(){
+    private OAuthResponseSM getOAuthResponseSM() {
         OAuthResponseSM oAuthResponseSM = new OAuthResponseSM();
-        oAuthResponseSM.token = "token";
+        oAuthResponseSM.accessToken = "accessToken";
+        oAuthResponseSM.refreshToken = "refreshToken";
+        oAuthResponseSM.expireIn = 30;
 
         return oAuthResponseSM;
     }
 
-    private OAuthTokenDBM getOAuthTokenDBM(){
+    private OAuthTokenDBM getOAuthTokenDBM() {
         OAuthTokenDBM oAuthTokenDBM = new OAuthTokenDBM();
 
-        oAuthTokenDBM.setToken("token");
+        oAuthTokenDBM.setAccessToken("accessToken");
+        oAuthTokenDBM.setRefreshToken("refreshToken");
+        oAuthTokenDBM.setExpiresInMinutes(30);
 
         return oAuthTokenDBM;
     }

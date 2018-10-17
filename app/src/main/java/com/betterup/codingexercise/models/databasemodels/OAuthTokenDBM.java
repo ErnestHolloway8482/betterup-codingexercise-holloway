@@ -4,7 +4,10 @@ import io.realm.RealmObject;
 
 public class OAuthTokenDBM extends RealmObject {
     private String uuid;
-    private String token;
+    private String accessToken;
+    private String refreshToken;
+    private int expiresInMinutes;
+
 
     public String getUuid() {
         return uuid;
@@ -14,11 +17,27 @@ public class OAuthTokenDBM extends RealmObject {
         this.uuid = uuid;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(final String token) {
-        this.token = token;
+    public void setAccessToken(final String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(final String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public int getExpiresInMinutes() {
+        return expiresInMinutes;
+    }
+
+    public void setExpiresInMinutes(final int expiresInMinutes) {
+        this.expiresInMinutes = expiresInMinutes;
     }
 }

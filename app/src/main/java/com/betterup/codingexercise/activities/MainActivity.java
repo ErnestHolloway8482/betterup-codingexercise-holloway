@@ -13,10 +13,11 @@ import com.betterup.codingexercise.R;
 import com.betterup.codingexercise.application.BetterUpApplication;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.ResourceManager;
+import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.models.viewmodels.MainActivityVM;
 import com.betterup.codingexercise.utilities.BuildConfigUtility;
+import com.betterup.codingexercise.views.Screen;
 import com.betterup.codingexercise.views.SplashScreen;
-import com.betterup.codingexercise.views.ViewContainer;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     ResourceManager resourceManager;
+
+    @Inject
+    ScreenManager screenManager;
 
     private static MainActivity instance;
 
@@ -70,11 +74,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        navigationManager.onBackPressed();
-
         //Pop off the view stack until nothing is left before allowing the user to exit the app since we are running the app as a single activity multiple screen setup.
         if (navigationManager.isOnLastScreen()) {
+            navigationManager.onBackPressed();
             finish();
+        } else {
+            navigationManager.onBackPressed();
         }
     }
 
@@ -101,9 +106,10 @@ public class MainActivity extends AppCompatActivity {
      * Initializes the main search article screen that is the first screen of the app. It also makes sure to provide the view container for the {@link NavigationManager}
      */
     private void setupMainScreen() {
-        navigationManager.setViewContainer((ViewContainer) findViewById(R.id.viewContainer));
+        navigationManager.setViewContainer(findViewById(R.id.viewContainer));
+        navigationManager.clearAllViewsFromStack();
 
-        SplashScreen splashScreen = new SplashScreen(this);
+        Screen splashScreen = screenManager.getScreenFromClass(SplashScreen.class);
         navigationManager.push(splashScreen);
         navigationManager.showScreen();
     }
@@ -125,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         TransitionManager.beginDelayedTransition(findViewById(R.id.viewContainer), autoTransition);
 
-        if(!BuildConfigUtility.isIsInAndroidTestMode()){
+        if (!BuildConfigUtility.isIsInAndroidTestMode()) {
             setupMainScreen();
         }
     }

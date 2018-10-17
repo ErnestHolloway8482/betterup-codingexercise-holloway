@@ -13,5 +13,31 @@
     <string name="account_info_error_title">Account Info Error</string>
     <string name="account_info_error_message">We are having trouble getting your account info at this time. Please try again later.</string>
 
+    <string name="login_screen_title">Login</string>
+    <string name="account_info_screen_title">Account Information</string>
+
+    <string name="user_name_hint">Username</string>
+    <string name="password_hint">Password</string>
+
+    <string name="login_button_text">Login</string>
+
+    <string name="personal_information_title">Personal Information</string>
+    <string name="name_label">Name: %1$s</string>
+    <string name="title_label">Title: %1$s</string>
+    <string name="motivation_label">Motivation: %1$s</string>
+    <string name="email_label">Email: %1$s</string>
+    <string name="phone_number_label">Phone Number: %1$s</string>
+
+    <string name="timezone_preferences_title">Time Zone Preferences</string>
+    <string name="time_zone_label">Time Zone: %1$s</string>
+
+    <string name="notification_preferences_title">Notification Preferences</string>
+    <string name="sms_notification_enabled_label">SMS Notification: %1$s</string>
+    <string name="email_notification_enabled_label">Email Notification: %1$s</string>
+
+
+
+
+
 
 </resources>

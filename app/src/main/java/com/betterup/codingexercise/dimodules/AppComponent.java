@@ -1,6 +1,10 @@
 package com.betterup.codingexercise.dimodules;
 
 import com.betterup.codingexercise.activities.MainActivity;
+import com.betterup.codingexercise.application.BetterUpApplication;
+import com.betterup.codingexercise.views.AccountInfoScreen;
+import com.betterup.codingexercise.views.LoginScreen;
+import com.betterup.codingexercise.views.SplashScreen;
 
 import javax.inject.Singleton;
 
@@ -17,7 +21,15 @@ import dagger.Component;
         RestClientModule.class,
         RealmModule.class})
 public interface AppComponent {
-    void inject(MainActivity mainActivity);
+    void inject(final BetterUpApplication betterUpApplication);
+    
+    void inject(final MainActivity mainActivity);
+
+    void inject(final SplashScreen splashScreen);
+
+    void inject(final LoginScreen loginScreen);
+
+    void inject(final AccountInfoScreen accountInfoScreen);
 
     @Component.Builder
     interface Builder {

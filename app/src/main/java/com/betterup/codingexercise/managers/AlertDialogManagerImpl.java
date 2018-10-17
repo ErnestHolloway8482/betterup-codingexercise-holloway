@@ -3,6 +3,8 @@ package com.betterup.codingexercise.managers;
 import android.app.AlertDialog;
 import android.content.Context;
 
+import com.betterup.codingexercise.R;
+
 import javax.inject.Singleton;
 
 /**
@@ -19,9 +21,10 @@ public class AlertDialogManagerImpl implements AlertDialogManager {
 
     @Override
     public void displayAlertMessage(final String title, final String body) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.BetterUpDialogTheme);
         builder.setTitle(title)
                 .setMessage(body)
+                .setPositiveButton("OK", null)
                 .create()
                 .show();
     }

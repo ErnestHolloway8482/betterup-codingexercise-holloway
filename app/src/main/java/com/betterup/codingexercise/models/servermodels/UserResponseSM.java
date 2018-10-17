@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * fields would be included.
  */
 public class UserResponseSM {
-    public int id;
+    public String id;
     public String name;
 
     @SerializedName("time_zone")

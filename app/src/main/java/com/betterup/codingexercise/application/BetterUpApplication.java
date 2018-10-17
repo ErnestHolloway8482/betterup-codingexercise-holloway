@@ -2,12 +2,19 @@ package com.betterup.codingexercise.application;
 
 import android.app.Application;
 
+import com.betterup.codingexercise.bindings.CommonViewBindings;
 import com.betterup.codingexercise.dimodules.AppComponent;
 import com.betterup.codingexercise.dimodules.DaggerAppComponent;
+import com.betterup.codingexercise.managers.ImageCacheManager;
+
+import javax.inject.Inject;
 
 public class BetterUpApplication extends Application {
     private static AppComponent appComponent;
     private static BetterUpApplication instance;
+
+    @Inject
+    ImageCacheManager imageCacheManager;
 
     @Override
     public void onCreate() {
@@ -40,10 +47,15 @@ public class BetterUpApplication extends Application {
     }
 
     private void setup() {
+        appComponent.inject(this);
+
+        CommonViewBindings.setImageCacheManager(imageCacheManager);
 
     }
 
     private void cleanUp() {
+        CommonViewBindings.setImageCacheManager(null);
+
         instance = null;
     }
 }

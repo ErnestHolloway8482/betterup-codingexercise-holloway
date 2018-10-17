@@ -12,8 +12,64 @@
             type="com.betterup.codingexercise.models.viewmodels.LoginVM"/>
     </data>
 
-    <RelativeLayout android:layout_width="match_parent"
+    <LinearLayout android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                  android:orientation="vertical"
                     android:background="@android:color/white">
-    </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatImageView android:id="@+id/icon"
+                                                      android:layout_width="wrap_content"
+                                                      android:layout_height="wrap_content"
+                                                      android:layout_marginTop="10dp"
+                                                      android:layout_marginBottom="10dp"
+                                                      android:layout_gravity="center_horizontal"
+                                                      app:srcCompat="@drawable/better_up_logo"/>
+
+        <include
+            layout="@layout/line_seperator"/>
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/user_name_hint"
+            android:textColorHint="@color/colorPrimary"
+            android:inputType="textEmailAddress"
+            android:text="@={vm.username}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="demo@demo.com"/>
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/password_hint"
+            android:textColorHint="@color/colorPrimary"
+            android:inputType="textPassword"
+            android:text="@={vm.password}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="password"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="40dp"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/colorAccent"
+                android:layout_height="wrap_content"
+                app:command="@{vm::login}"
+                android:text="@string/login_button_text"
+        />
+
+
+    </LinearLayout>
 </layout>
