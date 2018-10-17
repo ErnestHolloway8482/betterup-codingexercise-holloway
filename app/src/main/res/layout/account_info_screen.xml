@@ -31,8 +31,7 @@
                                                               android:layout_gravity="center_horizontal"
                                                               android:layout_margin="3dp"
                                                               tools:src="@drawable/ic_account_circle_black"
-                                                              app:imageUrl="@{vm.accountInfoDOM.avatarUrl}"
-                                                              app:tint="@color/colorAccent"/>
+                                                              app:imageUrl="@{vm.accountInfoDOM.avatarUrl}"/>
 
                 <TextView android:id="@+id/personalInformationTitle" android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
