@@ -93,6 +93,8 @@ public class AccountInfoDataMapper {
     private OAuthTokenDOM getOAuthTokenDOM(final OAuthTokenDBM databaseModel) {
         OAuthTokenDOM domainModel = new OAuthTokenDOM();
 
+        domainModel.token = databaseModel.getToken();
+
         return domainModel;
     }
 }

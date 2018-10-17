@@ -12,7 +12,11 @@ public class BuildConfigUtility {
     private static boolean isNetworkDisabledForTest;
 
     public static boolean isLoggingEnabled() {
-        return Build.TYPE.equals("debug");
+        if (BuildConfigUtility.isInTestMode()) {
+            return false;
+        } else {
+            return Build.TYPE.equals("debug");
+        }
     }
 
     public static boolean isInTestMode() {
