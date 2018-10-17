@@ -4,6 +4,7 @@ package com.betterup.codingexercise.dimodules;
 import com.betterup.codingexercise.BaseAndroidUnitTest;
 import com.betterup.codingexercise.integrationtests.AccountFacadeTest;
 import com.betterup.codingexercise.unittests.AccountInfoDAOTest;
+import com.betterup.codingexercise.unittests.AccountRestClientTest;
 import com.betterup.codingexercise.viewmodeltests.AccountInfoVMTest;
 import com.betterup.codingexercise.viewmodeltests.LoginVMTest;
 import com.betterup.codingexercise.viewmodeltests.MainActivityVMTest;
@@ -37,5 +38,7 @@ public interface AndroidTestAppComponent extends AppComponent {
     void inject(AccountInfoDAOTest accountInfoDAOTest);
 
     void inject(AccountFacadeTest accountFacadeTest);
+
+    void inject(AccountRestClientTest restClientTest);
 
 }

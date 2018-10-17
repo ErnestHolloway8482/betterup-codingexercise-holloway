@@ -65,14 +65,14 @@ public class AccountInfoDAOTest extends BaseAndroidUnitTest {
         String uuid = UUID.randomUUID().toString();
 
         OAuthTokenDBM databaseModel = new OAuthTokenDBM();
-        databaseModel.setToken(uuid);
+        databaseModel.setAccessToken(uuid);
 
         Assert.assertTrue(accountInfoDAO.saveOAuthToken(databaseModel));
 
         OAuthTokenDBM retrievedDatabaseModel = accountInfoDAO.getOauthToken();
 
         Assert.assertNotNull(retrievedDatabaseModel);
-        Assert.assertEquals(databaseModel.getToken(), retrievedDatabaseModel.getToken());
+        Assert.assertEquals(databaseModel.getAccessToken(), retrievedDatabaseModel.getAccessToken());
     }
 
     @Test

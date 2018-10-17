@@ -45,7 +45,7 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
     @Test
     public void loginTest(){
         OAuthResponseSM response = new OAuthResponseSM();
-        response.token = "token";
+        response.accessToken = "accessToken";
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
 
@@ -62,7 +62,7 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
     @Test
     public void getOAuthTokenFromCacheTest(){
         OAuthResponseSM response = new OAuthResponseSM();
-        response.token = "token";
+        response.accessToken = "accessToken";
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
 
@@ -71,7 +71,7 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
         OAuthTokenDOM oAuthTokenDOM = accountFacade.getOAuthTokenFromCache();
 
         Assert.assertNotNull(oAuthTokenDOM);
-        Assert.assertEquals(response.token, oAuthTokenDOM.token);
+        Assert.assertEquals(response.accessToken, oAuthTokenDOM.accessToken);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
     @Test
     public void clearDatabaseItemsTest(){
         OAuthResponseSM response = new OAuthResponseSM();
-        response.token = "token";
+        response.accessToken = "accessToken";
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
         Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());

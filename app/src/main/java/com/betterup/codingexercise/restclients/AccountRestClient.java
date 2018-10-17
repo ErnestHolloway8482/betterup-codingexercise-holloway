@@ -7,5 +7,7 @@ import com.betterup.codingexercise.models.servermodels.UserResponseSM;
 public interface AccountRestClient {
     UserResponseSM getAccountInformation();
 
+    UserResponseSM getAccountInformation(final String accessToken);
+
     OAuthResponseSM login(final LoginRequestSM loginRequest);
 }

@@ -85,7 +85,7 @@ public class AccountInfoDataMapper {
 
     private OAuthTokenDBM getOAuthTokenDBM(final OAuthResponseSM serverModel) {
         OAuthTokenDBM databaseModel = new OAuthTokenDBM();
-        databaseModel.setToken(serverModel.token);
+        databaseModel.setAccessToken(serverModel.accessToken);
 
         return databaseModel;
     }
@@ -93,7 +93,7 @@ public class AccountInfoDataMapper {
     private OAuthTokenDOM getOAuthTokenDOM(final OAuthTokenDBM databaseModel) {
         OAuthTokenDOM domainModel = new OAuthTokenDOM();
 
-        domainModel.token = databaseModel.getToken();
+        domainModel.accessToken = databaseModel.getAccessToken();
 
         return domainModel;
     }

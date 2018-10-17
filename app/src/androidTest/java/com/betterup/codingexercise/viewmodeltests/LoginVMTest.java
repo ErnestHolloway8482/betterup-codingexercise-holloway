@@ -75,7 +75,7 @@ public class LoginVMTest extends BaseAndroidUnitTest {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
 
         OAuthResponseSM response = new OAuthResponseSM();
-        response.token = "token";
+        response.accessToken = "accessToken";
 
         Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
 
