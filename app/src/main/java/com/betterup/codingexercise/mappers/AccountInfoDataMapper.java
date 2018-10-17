@@ -86,6 +86,8 @@ public class AccountInfoDataMapper {
     private OAuthTokenDBM getOAuthTokenDBM(final OAuthResponseSM serverModel) {
         OAuthTokenDBM databaseModel = new OAuthTokenDBM();
         databaseModel.setAccessToken(serverModel.accessToken);
+        databaseModel.setRefreshToken(serverModel.refreshToken);
+        databaseModel.setExpiresInMinutes(serverModel.expireIn);
 
         return databaseModel;
     }
@@ -94,6 +96,8 @@ public class AccountInfoDataMapper {
         OAuthTokenDOM domainModel = new OAuthTokenDOM();
 
         domainModel.accessToken = databaseModel.getAccessToken();
+        domainModel.refreshToken = databaseModel.getRefreshToken();
+        domainModel.expiresInMinutes = databaseModel.getExpiresInMinutes();
 
         return domainModel;
     }

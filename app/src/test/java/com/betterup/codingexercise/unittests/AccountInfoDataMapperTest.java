@@ -103,6 +103,8 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
 
         Assert.assertNotNull(oAuthTokenDBM);
         Assert.assertEquals(oAuthResponseSM.accessToken, oAuthTokenDBM.getAccessToken());
+        Assert.assertEquals(oAuthResponseSM.refreshToken, oAuthTokenDBM.getRefreshToken());
+        Assert.assertEquals(oAuthResponseSM.expireIn, oAuthTokenDBM.getExpiresInMinutes());
     }
 
     @Test
@@ -113,6 +115,8 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
 
         Assert.assertNotNull(oAuthTokenDBM);
         Assert.assertEquals(oAuthTokenDBM.getAccessToken(), oAuthTokenDOM.accessToken);
+        Assert.assertEquals(oAuthTokenDBM.getRefreshToken(), oAuthTokenDOM.refreshToken);
+        Assert.assertEquals(oAuthTokenDBM.getExpiresInMinutes(), oAuthTokenDOM.expiresInMinutes);
     }
 
     private UserResponseSM getUserResponse() {
@@ -160,6 +164,8 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
     private OAuthResponseSM getOAuthResponseSM(){
         OAuthResponseSM oAuthResponseSM = new OAuthResponseSM();
         oAuthResponseSM.accessToken = "accessToken";
+        oAuthResponseSM.refreshToken = "refreshToken";
+        oAuthResponseSM.expireIn = 30;
 
         return oAuthResponseSM;
     }
@@ -168,6 +174,8 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
         OAuthTokenDBM oAuthTokenDBM = new OAuthTokenDBM();
 
         oAuthTokenDBM.setAccessToken("accessToken");
+        oAuthTokenDBM.setRefreshToken("refreshToken");
+        oAuthTokenDBM.setExpiresInMinutes(30);
 
         return oAuthTokenDBM;
     }
