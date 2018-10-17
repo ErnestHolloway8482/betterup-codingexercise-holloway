@@ -73,9 +73,10 @@ public class AccountFacade {
         databaseManager.closeDatabase();
     }
 
-    public void removeDatabase(){
+    public boolean removeDatabase(){
         databaseManager.closeDatabase();
-        databaseManager.deleteDatabase();
+
+        return databaseManager.deleteDatabase();
     }
 
     public void clearDataBaseItems(){

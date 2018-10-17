@@ -7,8 +7,10 @@ import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.models.domainmodels.OAuthTokenDOM;
 import com.betterup.codingexercise.models.servermodels.LoginRequestSM;
 import com.betterup.codingexercise.models.servermodels.OAuthResponseSM;
+import com.betterup.codingexercise.models.servermodels.UserResponseSM;
 import com.betterup.codingexercise.restclients.AccountRestClient;
 
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -79,5 +81,85 @@ public class AccountFacadeTest extends BaseAndroidUnitTest {
         Assert.assertFalse(accountFacade.login("username", "password"));
 
         Assert.assertNull(accountFacade.getOAuthTokenFromCache());
+    }
+
+    @Test
+    public void getAccountInfoFromServerTest(){
+        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+
+        Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
+    }
+
+    @Test
+    public void getAccountInfoFromServerErrorTest(){
+        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(null);
+
+        Assert.assertNull(accountFacade.getAccountInfoFromServer());
+    }
+
+    @Test
+    public void getAccountInfoFromCacheTest(){
+        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+
+        Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
+        Assert.assertNotNull(accountFacade.getAccountInfoFromCache());
+    }
+
+    @Test
+    public void getAccountInfoFromCacheErrorTest(){
+        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(null);
+
+        Assert.assertNull(accountFacade.getAccountInfoFromServer());
+        Assert.assertNull(accountFacade.getAccountInfoFromCache());
+    }
+
+    @Test
+    public void removeDatabaseTest(){
+        Assert.assertTrue(accountFacade.removeDatabase());
+    }
+
+    @Test
+    public void clearDatabaseItemsTest(){
+        OAuthResponseSM response = new OAuthResponseSM();
+        response.token = "token";
+
+        Mockito.when(accountRestClient.login(Mockito.any(LoginRequestSM.class))).thenReturn(response);
+        Mockito.when(accountRestClient.getAccountInformation()).thenReturn(getUserResponse());
+
+        Assert.assertTrue(accountFacade.login("username", "password"));
+        Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
+
+        Assert.assertNotNull(accountFacade.getOAuthTokenFromCache());
+        Assert.assertNotNull(accountFacade.getAccountInfoFromCache());
+
+        accountFacade.clearDataBaseItems();
+
+        Assert.assertNull(accountFacade.getOAuthTokenFromCache());
+        Assert.assertNull(accountFacade.getAccountInfoFromCache());
+    }
+
+    private UserResponseSM getUserResponse() {
+        UserResponseSM responseSM = new UserResponseSM();
+        responseSM.id = 1;
+        responseSM.name = "name";
+        responseSM.timeZone = "CST";
+        responseSM.title = "title";
+        responseSM.motivation = "motivation";
+
+        UserResponseSM.Avatar avatar = new UserResponseSM.Avatar();
+        avatar.links = new UserResponseSM.Links();
+        avatar.links.thumbnail = new UserResponseSM.Thumbnail();
+        avatar.links.thumbnail.href = "www.picture.url.com";
+        responseSM.avatar = avatar;
+
+        responseSM.phone = "123-456-7890";
+        responseSM.activatedAt = DateTime.now().toString();
+        responseSM.email = "email";
+        responseSM.lastActiveAt = DateTime.now().toString();
+
+        responseSM.smsEnabled = true;
+        responseSM.emailMessagesEnabled = true;
+
+        return responseSM;
     }
 }
