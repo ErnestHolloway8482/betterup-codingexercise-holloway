@@ -50,15 +50,7 @@ public class AccountInfoVM extends BaseVM {
     }
 
     public void logout() {
-        alertDialogManager.displayAlertMessage(
-                resourceManager.getString(R.string.logout_alert_title),
-                resourceManager.getString(R.string.logout_alert_message),
-                resourceManager.getString(R.string.logout_alert_positive_button_title),
-                this::doLogoutAsync,
-                resourceManager.getString(R.string.logout_alert_negative_button_title),
-                () -> {
-                }
-        );
+        MainActivity.getInstance().runOnUiThread(this::displayLogoutAlertDialog);
     }
 
     @Override
@@ -117,21 +109,33 @@ public class AccountInfoVM extends BaseVM {
         String title = resourceManager.getString(R.string.network_error_title);
         String body = resourceManager.getString(R.string.network_error_message);
 
-        alertDialogManager.displayAlertMessage(title, body, "OK", () -> getAccountInfo());
+        MainActivity.getInstance().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body, "OK", () -> getAccountInfo()));
     }
 
     private void displayAccountInfoErrorMessage() {
         String title = resourceManager.getString(R.string.account_info_error_title);
         String body = resourceManager.getString(R.string.account_info_error_message);
 
-        alertDialogManager.displayAlertMessage(title, body);
+        MainActivity.getInstance().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
     }
 
     private void displayLogoutErrorMessage() {
         String title = resourceManager.getString(R.string.logout_error_title);
         String body = resourceManager.getString(R.string.logout_error_message);
 
-        alertDialogManager.displayAlertMessage(title, body);
+        MainActivity.getInstance().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
+    }
+
+    private void displayLogoutAlertDialog() {
+        alertDialogManager.displayAlertMessage(
+                resourceManager.getString(R.string.logout_alert_title),
+                resourceManager.getString(R.string.logout_alert_message),
+                resourceManager.getString(R.string.logout_alert_positive_button_title),
+                this::doLogoutAsync,
+                resourceManager.getString(R.string.logout_alert_negative_button_title),
+                () -> {
+                }
+        );
     }
 
     private void cleanupSubscribers() {
