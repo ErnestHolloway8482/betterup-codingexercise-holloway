@@ -53,8 +53,6 @@ public class LoginVM extends BaseVM {
     }
 
     public void login() {
-        mainActivityProviderManager.provideMainActivity().getViewModel().displayProgressDialog();
-
         if (!networkManager.connectedToNetwork()) {
             mainActivityProviderManager.runOnUiThread(this::displayNetworkErrorMessage);
         } else {
@@ -76,6 +74,8 @@ public class LoginVM extends BaseVM {
 
     private void doLoginAsync() {
         cleanupSubscribers();
+
+        mainActivityProviderManager.provideMainActivity().getViewModel().displayProgressDialog();
 
         subscriber = Single.fromCallable(() -> accountFacade.login(username.get(), password.get()))
                 .subscribeOn(Schedulers.io())
@@ -102,6 +102,8 @@ public class LoginVM extends BaseVM {
     }
 
     private void displayLoginErrorMessage() {
+        mainActivityProviderManager.provideMainActivity().getViewModel().dismissProgressDialog();
+
         String title = resourceManager.getString(R.string.login_error_title);
         String body = resourceManager.getString(R.string.login_error_message);
 
