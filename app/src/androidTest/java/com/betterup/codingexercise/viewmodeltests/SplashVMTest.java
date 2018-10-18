@@ -7,6 +7,7 @@ import com.betterup.codingexercise.daos.AccountInfoDAO;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.ScreenManager;
+import com.betterup.codingexercise.models.servermodels.OAuthResponseSM;
 import com.betterup.codingexercise.models.servermodels.UserResponseSM;
 import com.betterup.codingexercise.models.viewmodels.SplashVM;
 import com.betterup.codingexercise.restclients.AccountRestClient;
@@ -72,8 +73,13 @@ public class SplashVMTest extends BaseAndroidUnitTest {
 
     @Test
     public void navigateToAccountInfoScreenTest() {
+        OAuthResponseSM oAuthResponseSM = new OAuthResponseSM();
+        oAuthResponseSM.accessToken = "accessToken";
+
+        Mockito.when(accountRestClient.login(Mockito.any())).thenReturn(oAuthResponseSM);
         Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
+        Assert.assertNotNull(accountFacade.login("userName", "password"));
         Assert.assertNotNull(accountFacade.getAccountInfoFromServer());
 
         splashVM = new SplashVM(accountFacade, navigationManager, screenManager);

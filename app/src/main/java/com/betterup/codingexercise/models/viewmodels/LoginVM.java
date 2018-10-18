@@ -3,9 +3,9 @@ package com.betterup.codingexercise.models.viewmodels;
 import android.databinding.ObservableField;
 
 import com.betterup.codingexercise.R;
-import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
@@ -29,6 +29,7 @@ public class LoginVM extends BaseVM {
     private final AlertDialogManager alertDialogManager;
     private final ScreenManager screenManager;
     private final ResourceManager resourceManager;
+    private final MainActivityProviderManager mainActivityProviderManager;
 
     private Disposable subscriber;
 
@@ -38,19 +39,21 @@ public class LoginVM extends BaseVM {
                    final NetworkManager networkManager,
                    final AlertDialogManager alertDialogManager,
                    final ScreenManager screenManager,
-                   final ResourceManager resourceManager) {
+                   final ResourceManager resourceManager,
+                   final MainActivityProviderManager mainActivityProviderManager) {
         this.accountFacade = accountFacade;
         this.navigationManager = navigationManager;
         this.networkManager = networkManager;
         this.alertDialogManager = alertDialogManager;
         this.screenManager = screenManager;
         this.resourceManager = resourceManager;
+        this.mainActivityProviderManager = mainActivityProviderManager;
 
         setupToolBar();
     }
 
     public void login() {
-        MainActivity.getInstance().getViewModel().displayProgressDialog();
+        mainActivityProviderManager.provideMainActivity().getViewModel().displayProgressDialog();
 
         if (!networkManager.connectedToNetwork()) {
             displayNetworkErrorMessage();
@@ -61,13 +64,13 @@ public class LoginVM extends BaseVM {
 
     @Override
     public void setupToolBar() {
-        MainActivity.getInstance().getViewModel().displayToolBar(false, resourceManager.getString(R.string.login_screen_title));
+        mainActivityProviderManager.provideMainActivity().getViewModel().displayToolBar(false, resourceManager.getString(R.string.login_screen_title));
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        MainActivity.getInstance().getViewModel().dismissToolbar();
+       mainActivityProviderManager.provideMainActivity().getViewModel().dismissToolbar();
         cleanupSubscribers();
     }
 
@@ -81,10 +84,10 @@ public class LoginVM extends BaseVM {
     }
 
     private void handleLoginResult(boolean successful) {
-        MainActivity.getInstance().getViewModel().dismissProgressDialog();
+        mainActivityProviderManager.provideMainActivity().getViewModel().dismissProgressDialog();
 
         if (successful) {
-            MainActivity.getInstance().runOnUiThread(this::navigateToAccountInformationScreen);
+            mainActivityProviderManager.provideMainActivity().runOnUiThread(this::navigateToAccountInformationScreen);
         } else {
             displayLoginErrorMessage();
         }

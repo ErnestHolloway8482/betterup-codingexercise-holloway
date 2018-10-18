@@ -31,8 +31,9 @@ public class ViewModelModule {
                                          final NetworkManager networkManager,
                                          final AlertDialogManager alertDialogManager,
                                          final ScreenManager screenManager,
-                                         final ResourceManager resourceManager) {
-        return new LoginVM(accountFacade, navigationManager, networkManager, alertDialogManager, screenManager, resourceManager);
+                                         final ResourceManager resourceManager,
+                                         final MainActivityProviderManager mainActivityProviderManager) {
+        return new LoginVM(accountFacade, navigationManager, networkManager, alertDialogManager, screenManager, resourceManager, mainActivityProviderManager);
     }
 
     @Provides
