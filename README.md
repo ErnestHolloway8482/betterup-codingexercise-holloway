@@ -38,8 +38,8 @@ and build tools and disabling this feature allows the app to be built and deploy
 
 7) Type in valid credentials that are located on the demo server to be used within the app. The credentials that I used are:
 
-ernest.holloway@embersoftwarellc.com
-Sprinter198!
+- ernest.holloway@embersoftwarellc.com
+- Sprinter198!
 
 
 # Architecture Overview And Overall Approach
