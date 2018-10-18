@@ -6,10 +6,14 @@ import com.betterup.codingexercise.R;
 import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
+import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.models.domainmodels.AccountInfoDOM;
 import com.betterup.codingexercise.utilities.LoggerUtils;
+import com.betterup.codingexercise.views.LoginScreen;
+import com.betterup.codingexercise.views.Screen;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,20 +27,38 @@ public class AccountInfoVM extends BaseVM {
     private final NetworkManager networkManager;
     private final ResourceManager resourceManager;
     private final AlertDialogManager alertDialogManager;
+    private final ScreenManager screenManager;
+    private final NavigationManager navigationManager;
 
     private Disposable subscriber;
 
     public AccountInfoVM(final AccountFacade accountFacade,
                          final NetworkManager networkManager,
                          final ResourceManager resourceManager,
-                         final AlertDialogManager alertDialogManager) {
+                         final AlertDialogManager alertDialogManager,
+                         final ScreenManager screenManager,
+                         final NavigationManager navigationManager) {
         this.accountFacade = accountFacade;
         this.networkManager = networkManager;
         this.resourceManager = resourceManager;
         this.alertDialogManager = alertDialogManager;
+        this.screenManager = screenManager;
+        this.navigationManager = navigationManager;
 
         setupToolBar();
         setup();
+    }
+
+    public void logout() {
+        alertDialogManager.displayAlertMessage(
+                resourceManager.getString(R.string.logout_alert_title),
+                resourceManager.getString(R.string.logout_alert_message),
+                resourceManager.getString(R.string.logout_alert_positive_button_title),
+                this::doLogoutAsync,
+                resourceManager.getString(R.string.logout_alert_negative_button_title),
+                () -> {
+                }
+        );
     }
 
     @Override
@@ -61,7 +83,7 @@ public class AccountInfoVM extends BaseVM {
         }
     }
 
-    private void doGetAccountInfoAsync(){
+    private void doGetAccountInfoAsync() {
         cleanupSubscribers();
 
         subscriber = Single.fromCallable(this::getAccountInfo)
@@ -83,10 +105,10 @@ public class AccountInfoVM extends BaseVM {
         return accountInfoDOM.get() != null;
     }
 
-    private void handleGetAccountInfo(boolean successful){
+    private void handleGetAccountInfo(boolean successful) {
         MainActivity.getInstance().getViewModel().dismissProgressDialog();
 
-        if(!successful){
+        if (!successful) {
             displayAccountInfoErrorMessage();
         }
     }
@@ -105,6 +127,13 @@ public class AccountInfoVM extends BaseVM {
         alertDialogManager.displayAlertMessage(title, body);
     }
 
+    private void displayLogoutErrorMessage() {
+        String title = resourceManager.getString(R.string.logout_error_title);
+        String body = resourceManager.getString(R.string.logout_error_message);
+
+        alertDialogManager.displayAlertMessage(title, body);
+    }
+
     private void cleanupSubscribers() {
         if (subscriber != null) {
             if (!subscriber.isDisposed()) {
@@ -112,5 +141,30 @@ public class AccountInfoVM extends BaseVM {
                 subscriber = null;
             }
         }
+    }
+
+    private void doLogoutAsync() {
+        cleanupSubscribers();
+
+        subscriber = Single.fromCallable(() -> accountFacade.removeDatabase())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleLogout, throwable -> LoggerUtils.log(throwable.getMessage()));
+    }
+
+    private void handleLogout(final boolean successful) {
+        if (successful) {
+            MainActivity.getInstance().runOnUiThread(this::navigateToLoginScreen);
+        } else {
+            displayLogoutErrorMessage();
+        }
+    }
+
+    private void navigateToLoginScreen() {
+        Screen loginScreen = screenManager.getScreenFromClass(LoginScreen.class);
+
+        navigationManager.clearAllViewsFromStack();
+        navigationManager.push(loginScreen);
+        navigationManager.showScreen();
     }
 }

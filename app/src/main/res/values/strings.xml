@@ -35,9 +35,12 @@
     <string name="sms_notification_enabled_label">SMS Notification: %1$s</string>
     <string name="email_notification_enabled_label">Email Notification: %1$s</string>
 
+    <string name ="logout_alert_title">Logout</string>
+    <string name ="logout_alert_message">Are you sure that you want to logout of your account?</string>
+    <string name ="logout_alert_positive_button_title">YES</string>
+    <string name ="logout_alert_negative_button_title">NO</string>
 
-
-
-
+    <string name ="logout_error_title">Logout Error</string>
+    <string name ="logout_error_message">We are unable to log you out of your account of this time. Please try aagain later.</string>
 
 </resources>
