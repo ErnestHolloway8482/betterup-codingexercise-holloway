@@ -56,7 +56,7 @@ public class LoginVM extends BaseVM {
         mainActivityProviderManager.provideMainActivity().getViewModel().displayProgressDialog();
 
         if (!networkManager.connectedToNetwork()) {
-            displayNetworkErrorMessage();
+            mainActivityProviderManager.runOnUiThread(this::displayNetworkErrorMessage);
         } else {
             doLoginAsync();
         }
@@ -70,7 +70,7 @@ public class LoginVM extends BaseVM {
     @Override
     protected void onCleared() {
         super.onCleared();
-       mainActivityProviderManager.provideMainActivity().getViewModel().dismissToolbar();
+        mainActivityProviderManager.provideMainActivity().getViewModel().dismissToolbar();
         cleanupSubscribers();
     }
 
@@ -87,9 +87,9 @@ public class LoginVM extends BaseVM {
         mainActivityProviderManager.provideMainActivity().getViewModel().dismissProgressDialog();
 
         if (successful) {
-            mainActivityProviderManager.provideMainActivity().runOnUiThread(this::navigateToAccountInformationScreen);
+            mainActivityProviderManager.runOnUiThread(this::navigateToAccountInformationScreen);
         } else {
-            displayLoginErrorMessage();
+            mainActivityProviderManager.runOnUiThread(this::displayLoginErrorMessage);
         }
     }
 

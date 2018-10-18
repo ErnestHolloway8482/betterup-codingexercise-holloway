@@ -10,4 +10,13 @@ public class MainActivityProviderManagerImpl implements MainActivityProviderMana
     public MainActivity provideMainActivity() {
         return MainActivity.getInstance();
     }
+
+    @Override
+    public void runOnUiThread(final Runnable runnable) {
+        if (runnable == null) {
+            return;
+        }
+
+        MainActivity.getInstance().runOnUiThread(runnable);
+    }
 }

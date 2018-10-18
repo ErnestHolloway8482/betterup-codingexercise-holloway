@@ -54,7 +54,7 @@ public class AccountInfoVM extends BaseVM {
     }
 
     public void logout() {
-        mainActivityProviderManager.provideMainActivity().runOnUiThread(this::displayLogoutAlertDialog);
+        mainActivityProviderManager.runOnUiThread(this::displayLogoutAlertDialog);
     }
 
     @Override
@@ -113,21 +113,21 @@ public class AccountInfoVM extends BaseVM {
         String title = resourceManager.getString(R.string.network_error_title);
         String body = resourceManager.getString(R.string.network_error_message);
 
-        mainActivityProviderManager.provideMainActivity().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body, "OK", () -> getAccountInfo()));
+        mainActivityProviderManager.runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body, "OK", () -> getAccountInfo()));
     }
 
     private void displayAccountInfoErrorMessage() {
         String title = resourceManager.getString(R.string.account_info_error_title);
         String body = resourceManager.getString(R.string.account_info_error_message);
 
-        mainActivityProviderManager.provideMainActivity().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
+        mainActivityProviderManager.runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
     }
 
     private void displayLogoutErrorMessage() {
         String title = resourceManager.getString(R.string.logout_error_title);
         String body = resourceManager.getString(R.string.logout_error_message);
 
-        mainActivityProviderManager.provideMainActivity().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
+        mainActivityProviderManager.runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
     }
 
     private void displayLogoutAlertDialog() {
@@ -164,7 +164,7 @@ public class AccountInfoVM extends BaseVM {
 
     private void handleLogout(final boolean successful) {
         if (successful) {
-            MainActivity.getInstance().runOnUiThread(this::navigateToLoginScreen);
+            mainActivityProviderManager.runOnUiThread(this::navigateToLoginScreen);
         } else {
             displayLogoutErrorMessage();
         }

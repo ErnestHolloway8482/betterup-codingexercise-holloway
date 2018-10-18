@@ -48,7 +48,10 @@ public class ViewModelModule {
     }
 
     @Provides
-    public static SplashVM provideSplashVM(final AccountFacade accountFacade, final NavigationManager navigationManager, final ScreenManager screenManager) {
-        return new SplashVM(accountFacade, navigationManager, screenManager);
+    public static SplashVM provideSplashVM(final AccountFacade accountFacade,
+                                           final NavigationManager navigationManager,
+                                           final ScreenManager screenManager,
+                                           final MainActivityProviderManager mainActivityProviderManager) {
+        return new SplashVM(accountFacade, navigationManager, screenManager, mainActivityProviderManager);
     }
 }
