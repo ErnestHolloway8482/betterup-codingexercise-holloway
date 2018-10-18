@@ -121,7 +121,7 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
 
     private UserResponseSM getUserResponse() {
         UserResponseSM responseSM = new UserResponseSM();
-        responseSM.id = 1;
+        responseSM.id = "1";
         responseSM.name = "name";
         responseSM.timeZone = "CST";
         responseSM.title = "title";
@@ -146,7 +146,7 @@ public class AccountInfoDataMapperTest extends BaseUnitTest {
 
     private AccountInfoDBM getAccountInfoDBM() {
         AccountInfoDBM accountInfoDBM = new AccountInfoDBM();
-        accountInfoDBM.setId(1);
+        accountInfoDBM.setId("1");
         accountInfoDBM.setName("name");
         accountInfoDBM.setTimeZonePreference("CST");
         accountInfoDBM.setTitle("title");
