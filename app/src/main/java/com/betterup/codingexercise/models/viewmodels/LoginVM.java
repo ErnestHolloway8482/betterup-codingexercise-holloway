@@ -47,10 +47,6 @@ public class LoginVM extends BaseVM {
         this.resourceManager = resourceManager;
 
         setupToolBar();
-
-        //For testing only please remove
-        username.set("ernest.holloway@embersoftwarellc.com");
-        password.set("Sprinter198!");
     }
 
     public void login() {
