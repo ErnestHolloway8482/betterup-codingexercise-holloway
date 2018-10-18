@@ -6,6 +6,7 @@ import com.betterup.codingexercise.R;
 import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
@@ -29,6 +30,7 @@ public class AccountInfoVM extends BaseVM {
     private final AlertDialogManager alertDialogManager;
     private final ScreenManager screenManager;
     private final NavigationManager navigationManager;
+    private final MainActivityProviderManager mainActivityProviderManager;
 
     private Disposable subscriber;
 
@@ -37,25 +39,27 @@ public class AccountInfoVM extends BaseVM {
                          final ResourceManager resourceManager,
                          final AlertDialogManager alertDialogManager,
                          final ScreenManager screenManager,
-                         final NavigationManager navigationManager) {
+                         final NavigationManager navigationManager,
+                         final MainActivityProviderManager mainActivityProviderManager) {
         this.accountFacade = accountFacade;
         this.networkManager = networkManager;
         this.resourceManager = resourceManager;
         this.alertDialogManager = alertDialogManager;
         this.screenManager = screenManager;
         this.navigationManager = navigationManager;
+        this.mainActivityProviderManager = mainActivityProviderManager;
 
         setupToolBar();
         setup();
     }
 
     public void logout() {
-        MainActivity.getInstance().runOnUiThread(this::displayLogoutAlertDialog);
+        mainActivityProviderManager.provideMainActivity().runOnUiThread(this::displayLogoutAlertDialog);
     }
 
     @Override
     public void setupToolBar() {
-        MainActivity.getInstance().getViewModel().displayToolBar(false, resourceManager.getString(R.string.account_info_screen_title));
+        mainActivityProviderManager.provideMainActivity().getViewModel().displayToolBar(false, resourceManager.getString(R.string.account_info_screen_title));
     }
 
     @Override
@@ -66,7 +70,7 @@ public class AccountInfoVM extends BaseVM {
     }
 
     private void setup() {
-        MainActivity.getInstance().getViewModel().displayProgressDialog();
+        mainActivityProviderManager.provideMainActivity().getViewModel().displayProgressDialog();
 
         if (networkManager.connectedToNetwork()) {
             doGetAccountInfoAsync();
@@ -98,7 +102,7 @@ public class AccountInfoVM extends BaseVM {
     }
 
     private void handleGetAccountInfo(boolean successful) {
-        MainActivity.getInstance().getViewModel().dismissProgressDialog();
+        mainActivityProviderManager.provideMainActivity().getViewModel().dismissProgressDialog();
 
         if (!successful) {
             displayAccountInfoErrorMessage();
@@ -109,21 +113,21 @@ public class AccountInfoVM extends BaseVM {
         String title = resourceManager.getString(R.string.network_error_title);
         String body = resourceManager.getString(R.string.network_error_message);
 
-        MainActivity.getInstance().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body, "OK", () -> getAccountInfo()));
+        mainActivityProviderManager.provideMainActivity().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body, "OK", () -> getAccountInfo()));
     }
 
     private void displayAccountInfoErrorMessage() {
         String title = resourceManager.getString(R.string.account_info_error_title);
         String body = resourceManager.getString(R.string.account_info_error_message);
 
-        MainActivity.getInstance().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
+        mainActivityProviderManager.provideMainActivity().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
     }
 
     private void displayLogoutErrorMessage() {
         String title = resourceManager.getString(R.string.logout_error_title);
         String body = resourceManager.getString(R.string.logout_error_message);
 
-        MainActivity.getInstance().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
+        mainActivityProviderManager.provideMainActivity().runOnUiThread(() -> alertDialogManager.displayAlertMessage(title, body));
     }
 
     private void displayLogoutAlertDialog() {

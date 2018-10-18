@@ -7,6 +7,7 @@ import com.betterup.codingexercise.BaseAndroidUnitTest;
 import com.betterup.codingexercise.R;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
@@ -52,6 +53,9 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     @Inject
     ScreenManager screenManager;
 
+    @Inject
+    MainActivityProviderManager mainActivityProviderManager;
+
     private AccountInfoVM accountInfoVM;
 
     @Before
@@ -70,10 +74,13 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     public void displayNetworkErrorMessageTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(false);
 
-        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
+        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager, mainActivityProviderManager);
 
-        String title = context.getString(R.string.network_error_title);
-        String message = context.getString(R.string.network_error_message);
+        Mockito.when(resourceManager.getString(R.string.network_error_title)).thenReturn("network_error_title");
+        Mockito.when(resourceManager.getString(R.string.network_error_message)).thenReturn("network_error_message");
+
+        String title = resourceManager.getString(R.string.network_error_title);
+        String message = resourceManager.getString(R.string.network_error_message);
 
         Mockito.verify(alertDialogManager, Mockito.atMost(1)).displayAlertMessage(title, message);
     }
@@ -82,7 +89,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     public void displayAccountInfoErrorMessageTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
 
-        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
+        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager, mainActivityProviderManager);
 
         String title = context.getString(R.string.account_info_error_title);
         String message = context.getString(R.string.account_info_error_message);
@@ -95,7 +102,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
         Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
-        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
+        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager, mainActivityProviderManager);
 
         Mockito.verify(alertDialogManager, Mockito.never()).displayAlertMessage(Mockito.anyString(), Mockito.anyString());
     }

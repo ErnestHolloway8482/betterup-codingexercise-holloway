@@ -9,6 +9,8 @@ import com.betterup.codingexercise.managers.DatabaseManager;
 import com.betterup.codingexercise.managers.DatabaseManagerImpl;
 import com.betterup.codingexercise.managers.ImageCacheManager;
 import com.betterup.codingexercise.managers.ImageCacheManagerImpl;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManagerImpl;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NavigationManagerImpl;
 import com.betterup.codingexercise.managers.NetworkManager;
@@ -57,13 +59,19 @@ public class ManagerModule {
 
     @Singleton
     @Provides
-    public static ResourceManager provideResourceManager(){
+    public static ResourceManager provideResourceManager() {
         return new ResourceManagerImpl();
     }
 
     @Singleton
     @Provides
-    public static ScreenManager provideScreenManager(){
+    public static ScreenManager provideScreenManager() {
         return new ScreenManagerImpl();
+    }
+
+    @Singleton
+    @Provides
+    public static MainActivityProviderManager provideMainActivityProviderManager() {
+        return new MainActivityProviderManagerImpl();
     }
 }

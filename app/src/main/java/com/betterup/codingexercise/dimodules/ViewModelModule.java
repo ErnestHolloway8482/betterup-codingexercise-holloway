@@ -2,6 +2,7 @@ package com.betterup.codingexercise.dimodules;
 
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
@@ -40,8 +41,9 @@ public class ViewModelModule {
                                                      final ResourceManager resourceManager,
                                                      final AlertDialogManager alertDialogManager,
                                                      final ScreenManager screenManager,
-                                                     final NavigationManager navigationManager) {
-        return new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
+                                                     final NavigationManager navigationManager,
+                                                     final MainActivityProviderManager mainActivityProviderManager) {
+        return new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager, mainActivityProviderManager);
     }
 
     @Provides
