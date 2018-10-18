@@ -35,8 +35,13 @@ public class ViewModelModule {
     }
 
     @Provides
-    public static AccountInfoVM provideAccountInfoVM(final AccountFacade accountFacade, final NetworkManager networkManager, final ResourceManager resourceManager, final AlertDialogManager alertDialogManager) {
-        return new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager);
+    public static AccountInfoVM provideAccountInfoVM(final AccountFacade accountFacade,
+                                                     final NetworkManager networkManager,
+                                                     final ResourceManager resourceManager,
+                                                     final AlertDialogManager alertDialogManager,
+                                                     final ScreenManager screenManager,
+                                                     final NavigationManager navigationManager) {
+        return new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
     }
 
     @Provides

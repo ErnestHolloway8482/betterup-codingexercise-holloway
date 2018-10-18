@@ -146,8 +146,10 @@ public class AccountInfoVM extends BaseVM {
     private void doLogoutAsync() {
         cleanupSubscribers();
 
-        subscriber = Single.fromCallable(() -> accountFacade.removeDatabase())
-                .subscribeOn(Schedulers.io())
+        MainActivity.getInstance().getViewModel().dismissProgressDialog();
+
+        subscriber = Single.fromCallable(() -> accountFacade.clearDataBaseItems())
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleLogout, throwable -> LoggerUtils.log(throwable.getMessage()));
     }

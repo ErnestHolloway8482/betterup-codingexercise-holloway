@@ -10,6 +10,7 @@ import com.betterup.codingexercise.managers.AlertDialogManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
+import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.models.servermodels.UserResponseSM;
 import com.betterup.codingexercise.models.viewmodels.AccountInfoVM;
 import com.betterup.codingexercise.restclients.AccountRestClient;
@@ -48,6 +49,9 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     @Inject
     AccountFacade accountFacade;
 
+    @Inject
+    ScreenManager screenManager;
+
     private AccountInfoVM accountInfoVM;
 
     @Before
@@ -66,7 +70,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     public void displayNetworkErrorMessageTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(false);
 
-        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager);
+        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
 
         String title = context.getString(R.string.network_error_title);
         String message = context.getString(R.string.network_error_message);
@@ -78,7 +82,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
     public void displayAccountInfoErrorMessageTest() {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
 
-        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager);
+        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
 
         String title = context.getString(R.string.account_info_error_title);
         String message = context.getString(R.string.account_info_error_message);
@@ -91,7 +95,7 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
         Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
         Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
 
-        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager);
+        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager);
 
         Mockito.verify(alertDialogManager, Mockito.never()).displayAlertMessage(Mockito.anyString(), Mockito.anyString());
     }
