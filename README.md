@@ -117,4 +117,9 @@ GSON-Used to allow for the conversion of JSON strings into Java objects.
 
 -The project took longer in order to get all of the architectural components to work well together. I could have taken the simpler approach, but my goal wasn’t just to get the project working. I wanted to get as close to what I would do on a real production project to maximize the chance of the software working well, being easier to maintain, and more importantly being able to change.
 
+-For the rest client tests, I made the choice to write it as an Android test and physically make the call to confirm that my API endpoints were working properly before integrating it within the code. While this works when the network and demo server is running, it makes
+it tough to be a very repeatable tests. As a result sometimes the rest client tests will fail at which point they need to be run again.
+
+-I skipped writing UI tests since they tend to be finicky and relied on manual QA instead. I placed the bulk of my testing effort inside of unit and integration tests.
+
 
