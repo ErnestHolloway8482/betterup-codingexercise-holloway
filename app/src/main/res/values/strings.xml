@@ -1,14 +1,10 @@
 <resources>
     <string name="app_name">codingexercise</string>
     <string name="network_error_title">Network Error</string>
-    <string name="network_error_message">There is a network connectivity issue. Please check your
-        mobile data or Wi-Fi settings.
-    </string>
+    <string name="network_error_message">There is a network connectivity issue. Please check your mobile data or Wi-Fi settings.</string>
 
     <string name="login_error_title">Login Error</string>
-    <string name="login_error_message">We are unable to sign you into the app. Please check that
-        your username and password.
-    </string>
+    <string name="login_error_message">We are unable to sign you into the app. Please check that your username and password are correct.</string>
 
     <string name="account_info_error_title">Account Info Error</string>
     <string name="account_info_error_message">We are having trouble getting your account info at this time. Please try again later.</string>
@@ -35,9 +31,12 @@
     <string name="sms_notification_enabled_label">SMS Notification: %1$s</string>
     <string name="email_notification_enabled_label">Email Notification: %1$s</string>
 
+    <string name ="logout_alert_title">Logout</string>
+    <string name ="logout_alert_message">Are you sure that you want to logout of your account?</string>
+    <string name ="logout_alert_positive_button_title">YES</string>
+    <string name ="logout_alert_negative_button_title">NO</string>
 
-
-
-
+    <string name ="logout_error_title">Logout Error</string>
+    <string name ="logout_error_message">We are unable to log you out of your account of this time. Please try aagain later.</string>
 
 </resources>

@@ -7,6 +7,7 @@ import com.betterup.codingexercise.BaseAndroidUnitTest;
 import com.betterup.codingexercise.R;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
@@ -54,6 +55,9 @@ public class LoginVMTest extends BaseAndroidUnitTest {
     @Inject
     AccountFacade accountFacade;
 
+    @Inject
+    MainActivityProviderManager mainActivityProviderManager;
+
     private LoginVM loginVM;
 
     @Before
@@ -61,7 +65,7 @@ public class LoginVMTest extends BaseAndroidUnitTest {
         super.setup();
         getTestAppComponent().inject(this);
 
-        loginVM = new LoginVM(accountFacade, navigationManager, networkManager, alertDialogManager, screenManager, resourceManager);
+        loginVM = new LoginVM(accountFacade, navigationManager, networkManager, alertDialogManager, screenManager, resourceManager, mainActivityProviderManager);
     }
 
     @After
@@ -82,6 +86,8 @@ public class LoginVMTest extends BaseAndroidUnitTest {
         loginVM.username.set("username");
         loginVM.password.set("password");
         loginVM.login();
+
+        sleep(4);
 
         Assert.assertTrue(navigationManager.isOnLastScreen());
         Assert.assertTrue(navigationManager.peek() instanceof AccountInfoScreen);

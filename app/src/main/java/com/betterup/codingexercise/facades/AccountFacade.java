@@ -86,8 +86,10 @@ public class AccountFacade {
         return databaseManager.deleteDatabase();
     }
 
-    public void clearDataBaseItems() {
+    public boolean clearDataBaseItems() {
         accountInfoDAO.deleteAccountInfo();
         accountInfoDAO.deleteOAuthToken();
+
+        return (accountInfoDAO.getAccountInfo()==null && accountInfoDAO.getOauthToken()==null);
     }
 }

@@ -34,13 +34,19 @@ public class ConverterTest extends BaseUnitTest {
     }
 
     @Test
-    public void convertStringToDoubleTest(){
+    public void convertStringToDoubleTest() {
         Assert.assertEquals(10.1123, Converter.convertStringToDouble("10.1123"), .00001d);
-        Assert.assertEquals(0, Converter.convertStringToDouble("ee"),.00001d);
+        Assert.assertEquals(0, Converter.convertStringToDouble("ee"), .00001d);
     }
 
     @Test
-    public void convertDoubleToStringTest(){
+    public void convertDoubleToStringTest() {
         Assert.assertEquals("10.1123", Converter.convertDoubleToString(10.1123));
+    }
+
+    @Test
+    public void convertBooleanToStringTest() {
+        Assert.assertEquals("Enabled", Converter.convertBooleanToString(true));
+        Assert.assertEquals("Disabled", Converter.convertBooleanToString(false));
     }
 }

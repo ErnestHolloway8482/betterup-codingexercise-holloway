@@ -2,6 +2,7 @@ package com.betterup.codingexercise.dimodules;
 
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
@@ -30,17 +31,27 @@ public class ViewModelModule {
                                          final NetworkManager networkManager,
                                          final AlertDialogManager alertDialogManager,
                                          final ScreenManager screenManager,
-                                         final ResourceManager resourceManager) {
-        return new LoginVM(accountFacade, navigationManager, networkManager, alertDialogManager, screenManager, resourceManager);
+                                         final ResourceManager resourceManager,
+                                         final MainActivityProviderManager mainActivityProviderManager) {
+        return new LoginVM(accountFacade, navigationManager, networkManager, alertDialogManager, screenManager, resourceManager, mainActivityProviderManager);
     }
 
     @Provides
-    public static AccountInfoVM provideAccountInfoVM(final AccountFacade accountFacade, final NetworkManager networkManager, final ResourceManager resourceManager, final AlertDialogManager alertDialogManager) {
-        return new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager);
+    public static AccountInfoVM provideAccountInfoVM(final AccountFacade accountFacade,
+                                                     final NetworkManager networkManager,
+                                                     final ResourceManager resourceManager,
+                                                     final AlertDialogManager alertDialogManager,
+                                                     final ScreenManager screenManager,
+                                                     final NavigationManager navigationManager,
+                                                     final MainActivityProviderManager mainActivityProviderManager) {
+        return new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager, mainActivityProviderManager);
     }
 
     @Provides
-    public static SplashVM provideSplashVM(final AccountFacade accountFacade, final NavigationManager navigationManager, final ScreenManager screenManager) {
-        return new SplashVM(accountFacade, navigationManager, screenManager);
+    public static SplashVM provideSplashVM(final AccountFacade accountFacade,
+                                           final NavigationManager navigationManager,
+                                           final ScreenManager screenManager,
+                                           final MainActivityProviderManager mainActivityProviderManager) {
+        return new SplashVM(accountFacade, navigationManager, screenManager, mainActivityProviderManager);
     }
 }

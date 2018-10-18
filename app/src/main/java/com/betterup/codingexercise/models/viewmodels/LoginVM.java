@@ -3,9 +3,9 @@ package com.betterup.codingexercise.models.viewmodels;
 import android.databinding.ObservableField;
 
 import com.betterup.codingexercise.R;
-import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.facades.AccountFacade;
 import com.betterup.codingexercise.managers.AlertDialogManager;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NetworkManager;
 import com.betterup.codingexercise.managers.ResourceManager;
@@ -29,6 +29,7 @@ public class LoginVM extends BaseVM {
     private final AlertDialogManager alertDialogManager;
     private final ScreenManager screenManager;
     private final ResourceManager resourceManager;
+    private final MainActivityProviderManager mainActivityProviderManager;
 
     private Disposable subscriber;
 
@@ -38,26 +39,22 @@ public class LoginVM extends BaseVM {
                    final NetworkManager networkManager,
                    final AlertDialogManager alertDialogManager,
                    final ScreenManager screenManager,
-                   final ResourceManager resourceManager) {
+                   final ResourceManager resourceManager,
+                   final MainActivityProviderManager mainActivityProviderManager) {
         this.accountFacade = accountFacade;
         this.navigationManager = navigationManager;
         this.networkManager = networkManager;
         this.alertDialogManager = alertDialogManager;
         this.screenManager = screenManager;
         this.resourceManager = resourceManager;
+        this.mainActivityProviderManager = mainActivityProviderManager;
 
         setupToolBar();
-
-        //For testing only please remove
-        username.set("ernest.holloway@embersoftwarellc.com");
-        password.set("Sprinter198!");
     }
 
     public void login() {
-        MainActivity.getInstance().getViewModel().displayProgressDialog();
-
         if (!networkManager.connectedToNetwork()) {
-            displayNetworkErrorMessage();
+            mainActivityProviderManager.runOnUiThread(this::displayNetworkErrorMessage);
         } else {
             doLoginAsync();
         }
@@ -65,18 +62,20 @@ public class LoginVM extends BaseVM {
 
     @Override
     public void setupToolBar() {
-        MainActivity.getInstance().getViewModel().displayToolBar(false, resourceManager.getString(R.string.login_screen_title));
+        mainActivityProviderManager.provideMainActivity().getViewModel().displayToolBar(false, resourceManager.getString(R.string.login_screen_title));
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        MainActivity.getInstance().getViewModel().dismissToolbar();
+        mainActivityProviderManager.provideMainActivity().getViewModel().dismissToolbar();
         cleanupSubscribers();
     }
 
     private void doLoginAsync() {
         cleanupSubscribers();
+
+        mainActivityProviderManager.provideMainActivity().getViewModel().displayProgressDialog();
 
         subscriber = Single.fromCallable(() -> accountFacade.login(username.get(), password.get()))
                 .subscribeOn(Schedulers.io())
@@ -85,12 +84,12 @@ public class LoginVM extends BaseVM {
     }
 
     private void handleLoginResult(boolean successful) {
-        MainActivity.getInstance().getViewModel().dismissProgressDialog();
+        mainActivityProviderManager.provideMainActivity().getViewModel().dismissProgressDialog();
 
         if (successful) {
-            MainActivity.getInstance().runOnUiThread(this::navigateToAccountInformationScreen);
+            mainActivityProviderManager.runOnUiThread(this::navigateToAccountInformationScreen);
         } else {
-            displayLoginErrorMessage();
+            mainActivityProviderManager.runOnUiThread(this::displayLoginErrorMessage);
         }
     }
 
@@ -103,6 +102,8 @@ public class LoginVM extends BaseVM {
     }
 
     private void displayLoginErrorMessage() {
+        mainActivityProviderManager.provideMainActivity().getViewModel().dismissProgressDialog();
+
         String title = resourceManager.getString(R.string.login_error_title);
         String body = resourceManager.getString(R.string.login_error_message);
 

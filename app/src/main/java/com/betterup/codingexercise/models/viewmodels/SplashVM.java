@@ -2,6 +2,7 @@ package com.betterup.codingexercise.models.viewmodels;
 
 import com.betterup.codingexercise.activities.MainActivity;
 import com.betterup.codingexercise.facades.AccountFacade;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.ScreenManager;
 import com.betterup.codingexercise.utilities.LoggerUtils;
@@ -24,13 +25,15 @@ public class SplashVM extends BaseVM {
     private final AccountFacade accountFacade;
     private final NavigationManager navigationManager;
     private final ScreenManager screenManager;
+    private final MainActivityProviderManager mainActivityProviderManager;
 
     private Disposable delaySubscriber;
 
-    public SplashVM(final AccountFacade accountFacade, final NavigationManager navigationManager, final ScreenManager screenManager) {
+    public SplashVM(final AccountFacade accountFacade, final NavigationManager navigationManager, final ScreenManager screenManager, final MainActivityProviderManager mainActivityProviderManager) {
         this.accountFacade = accountFacade;
         this.navigationManager = navigationManager;
         this.screenManager = screenManager;
+        this.mainActivityProviderManager = mainActivityProviderManager;
 
         delayNavigationTimeToCorrectScreen();
     }
@@ -54,9 +57,9 @@ public class SplashVM extends BaseVM {
 
     private void navigateToCorrectScreen() {
         if (accountFacade.getAccountInfoFromCache() != null) {
-            navigateToAccountInfoScreen();
+            mainActivityProviderManager.runOnUiThread(this::navigateToAccountInfoScreen);
         } else {
-            navigateToLoginScreen();
+            mainActivityProviderManager.runOnUiThread(this::navigateToLoginScreen);
         }
 
         cleanupSubscribers();

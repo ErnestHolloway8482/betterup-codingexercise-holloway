@@ -3,12 +3,14 @@ package com.betterup.codingexercise.dimodules;
 import android.app.Activity;
 import android.content.Context;
 
+import com.betterup.codingexercise.MainActivityProviderManageAndroidTestImpl;
 import com.betterup.codingexercise.managers.AlertDialogManager;
 import com.betterup.codingexercise.managers.AlertDialogManagerImpl;
 import com.betterup.codingexercise.managers.DatabaseManager;
 import com.betterup.codingexercise.managers.DatabaseManagerImpl;
 import com.betterup.codingexercise.managers.ImageCacheManager;
 import com.betterup.codingexercise.managers.ImageCacheManagerImpl;
+import com.betterup.codingexercise.managers.MainActivityProviderManager;
 import com.betterup.codingexercise.managers.NavigationManager;
 import com.betterup.codingexercise.managers.NavigationManagerImpl;
 import com.betterup.codingexercise.managers.NetworkManager;
@@ -80,5 +82,20 @@ public class AndroidTestManagerModule {
         Mockito.when(screenManager.getScreenFromClass(AccountInfoScreen.class)).thenReturn(accountInfoScreen);
 
         return screenManager;
+    }
+
+    @Singleton
+    @Provides
+    public static MainActivityProviderManager provideMainActivityProviderManager() {
+        MainActivityProviderManager mainActivityProviderManager = new MainActivityProviderManageAndroidTestImpl();
+
+//        MainActivityVM mainActivityVM = Mockito.mock(MainActivityVM.class);
+//
+//        MainActivity mainActivity = Mockito.mock(MainActivity.class);
+//        Mockito.when(mainActivity.getViewModel()).thenReturn(mainActivityVM);
+//
+//        Mockito.when((mainActivityProviderManager.provideMainActivity())).thenReturn(mainActivity);
+
+        return mainActivityProviderManager;
     }
 }
