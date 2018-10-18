@@ -107,6 +107,29 @@ public class AccountInfoVMTest extends BaseAndroidUnitTest {
         Mockito.verify(alertDialogManager, Mockito.never()).displayAlertMessage(Mockito.anyString(), Mockito.anyString());
     }
 
+    @Test
+    public void displayLogoutAlertDialogTest() {
+        Mockito.when(networkManager.connectedToNetwork()).thenReturn(true);
+        Mockito.when(accountRestClient.getAccountInformation(Mockito.anyString())).thenReturn(getUserResponse());
+
+        accountInfoVM = new AccountInfoVM(accountFacade, networkManager, resourceManager, alertDialogManager, screenManager, navigationManager, mainActivityProviderManager);
+
+        String title = context.getString(R.string.logout_alert_title);
+        String message = context.getString(R.string.logout_alert_message);
+        String alertPositiveButton = context.getString(R.string.logout_alert_positive_button_title);
+        String alertNegativeButton = context.getString(R.string.logout_alert_negative_button_title);
+
+        accountInfoVM.logout();
+
+        Mockito.verify(alertDialogManager, Mockito.atMost(1)).displayAlertMessage(
+                Mockito.eq(title),
+                Mockito.eq(message),
+                Mockito.eq(alertPositiveButton),
+                Mockito.any(Runnable.class),
+                Mockito.eq(alertNegativeButton),
+                Mockito.any(Runnable.class));
+    }
+
     private UserResponseSM getUserResponse() {
         UserResponseSM responseSM = new UserResponseSM();
         responseSM.id = "1";
