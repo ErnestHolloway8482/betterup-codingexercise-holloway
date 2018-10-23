@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 
 import com.betterup.codingexercise.R;
+import com.betterup.codingexercise.utilities.LoggerUtils;
 
 import javax.inject.Singleton;
 
@@ -21,6 +22,32 @@ public class AlertDialogManagerImpl implements AlertDialogManager {
 
     @Override
     public void displayAlertMessage(final String title, final String body) {
+        try {
+            buildAlertDialog(title, body);
+        } catch (Exception e) {
+            LoggerUtils.logError(e.getMessage());
+        }
+    }
+
+    @Override
+    public void displayAlertMessage(final String title, final String body, final String actionButton1Text, final Runnable action1) {
+        try {
+            buildAlertDialog(title, body, actionButton1Text, action1);
+        } catch (Exception e) {
+            LoggerUtils.logError(e.getMessage());
+        }
+    }
+
+    @Override
+    public void displayAlertMessage(final String title, final String body, final String actionButton1Text, final Runnable action1, final String actionButton2Text, final Runnable action2) {
+        try {
+            buildAlertDialog(title, body, actionButton1Text, action1, actionButton2Text, action2);
+        } catch (Exception e) {
+            LoggerUtils.logError(e.getMessage());
+        }
+    }
+
+    private void buildAlertDialog(final String title, final String body) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.BetterUpDialogTheme);
         builder.setTitle(title)
                 .setMessage(body)
@@ -29,8 +56,7 @@ public class AlertDialogManagerImpl implements AlertDialogManager {
                 .show();
     }
 
-    @Override
-    public void displayAlertMessage(final String title, final String body, final String actionButton1Text, final Runnable action1) {
+    private void buildAlertDialog(final String title, final String body, final String actionButton1Text, final Runnable action1) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title)
                 .setMessage(body)
@@ -39,8 +65,7 @@ public class AlertDialogManagerImpl implements AlertDialogManager {
                 .show();
     }
 
-    @Override
-    public void displayAlertMessage(final String title, final String body, final String actionButton1Text, final Runnable action1, final String actionButton2Text, final Runnable action2) {
+    private void buildAlertDialog(final String title, final String body, final String actionButton1Text, final Runnable action1, final String actionButton2Text, final Runnable action2) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title)
                 .setMessage(body)
@@ -48,6 +73,5 @@ public class AlertDialogManagerImpl implements AlertDialogManager {
                 .setNegativeButton(actionButton2Text, (dialog, which) -> action2.run())
                 .create()
                 .show();
-
     }
 }
